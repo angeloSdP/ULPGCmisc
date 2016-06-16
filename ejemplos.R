@@ -15,3 +15,7 @@ t2
 
 freqTable(symptom,by=disease,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=TRUE)
 freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
+
+x=rnorm(50,10,2)
+summary1(x)
+summary1(x,normalCurve=TRUE)
