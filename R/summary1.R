@@ -27,9 +27,11 @@ summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
             quantile(x,na.rm=TRUE,probs=ptiles[2]))
   }
   normal=is.normal(x)
-  if (is.na(normal)) resumen=data.frame(xlabel,"","NA (NA)")
-  else if (normal) resumen=data.frame(xlabel, "",meansd(x))
-  else resumen=data.frame(xlabel,"",medianPtiles(x))
+  rsname=if (normal) "mean (sd)" else "median (quartiles)"
+  if (is.na(normal)) resumen=data.frame(xlabel,"NA (NA)")
+  else if (normal) resumen=data.frame(xlabel, meansd(x))
+  else resumen=data.frame(xlabel,medianPtiles(x))
+  names(resumen)=c(xlabel,rsname)
   if (plot&!is.na(normal)){
     gr<- ggplot(data=data.frame(x), aes(x)) +
       geom_histogram(aes(y=..density..),
