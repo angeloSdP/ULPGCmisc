@@ -15,6 +15,8 @@
 #'
 summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
                   normalCurve=FALSE){
+  panderOptions('knitr.auto.asis', FALSE)
+  panderOptions('keep.line.breaks', TRUE)
   if (is.null(xlabel)) xlabel=deparse(substitute(x))
   is.normal=function(x){
     if (length(x)>5000) x=sample(x,5000)
@@ -31,7 +33,8 @@ summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
   if (is.na(normal)) resumen=data.frame(xlabel,"NA (NA)")
   else if (normal) resumen=data.frame(xlabel, meansd(x))
   else resumen=data.frame(xlabel,medianPtiles(x))
-  names(resumen)=c(xlabel,rsname)
+  names(resumen)=c("Variable",rsname)
+  pander(resumen)
   if (plot&!is.na(normal)){
     gr<- ggplot(data=data.frame(x), aes(x)) +
       geom_histogram(aes(y=..density..),
@@ -39,7 +42,5 @@ summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
                      col="blue", fill="#00A4FF", alpha = .6) + xlab(xlabel) + ylab("Frecuencia")
     if (normalCurve) gr=gr+stat_function(fun = dnorm, args=list(mean=mean(x), sd=sd(x)),colour = "red")
     print(gr)
-    pandoc.p("<p>  ")
   }
-  pander(resumen)
 }

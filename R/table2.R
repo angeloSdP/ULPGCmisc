@@ -21,8 +21,9 @@
 #'
 table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printFreq=TRUE,
                 density=TRUE, showTable=TRUE){
-  require(pander)
+  panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
+  panderOptions('table.style',"multiline")
   if (is.null(xlabel)) xlabel=deparse(substitute(x))
   if (is.null(bylabel)) bylabel=deparse(substitute(by))
   if (xlabel==bylabel) bylabel=paste(bylabel,"1",sep=".")
@@ -42,7 +43,11 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
   wsp=rep("",nrow(tbl2)-1)
   tbl2=cbind(tbl2,P=c(wsp,formatPval(pv)))
   names(tbl2)[4]=paste("P\n",test)
-  if(showTable) pander(tbl2)
+  tbl1=table1(x[!is.na(by)],xlabel,plot=FALSE,showTable=FALSE)
+  for (j in 2:ncol(tbl2)) levels(tbl2[,j])=c(levels(tbl2[,j]),"")
+  tbl=cbind(tbl1,rbind(rep("",ncol(tbl2)-1),tbl2[,-1]))
+  names(tbl)[1:2]=c("","All \n n(%)")
+  if(showTable) pander(tbl)
   if (plot){
     levels(x) <- gsub(" ", "\n", levels(x))
     freqTable=data.frame(tb)
@@ -51,7 +56,7 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
     names(dpct)=c("value","by","pct")
     freqTable=merge(freqTable,dpct)
     levels(freqTable$value) <- gsub(" ", "\n", levels(freqTable$value))
-    ldist=if (horizontal) 0.1 else 0.025
+    ldist=if (horizontal) 0.1 else 0.035
     if (density) {
       gr=ggplot(freqTable, aes(x=value, y=pct, fill=value)) +
         geom_bar(stat="identity") + facet_grid(. ~ by) +
@@ -72,9 +77,5 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
     print(gr)
     pandoc.p("")
   }
-  tbl1=table1(x[!is.na(by)],xlabel,plot=FALSE,showTable=FALSE)
-  for (j in 2:ncol(tbl2)) levels(tbl2[,j])=c(levels(tbl2[,j]),"")
-  tbl=cbind(tbl1,rbind(rep("",ncol(tbl2)-1),tbl2[,-1]))
-  names(tbl)[1]=""
   return(invisible(tbl))
 }

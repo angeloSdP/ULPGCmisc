@@ -18,14 +18,20 @@
 #'
 table1=function(x,xlabel=NULL,plot=TRUE,horizontal=FALSE, printFreq=TRUE,
 density=TRUE, showTable=TRUE){
+  panderOptions('knitr.auto.asis', FALSE)
+  panderOptions('keep.line.breaks', TRUE)
+  panderOptions('table.style',"multiline")
   if (is.null(xlabel)) xlabel=deparse(substitute(x))
   x=factor(x)
   n=table(x)
   pct=prop.table(n)
+  tbl=data.frame(rownames(n),sprintf("%4.0f (%.2f)", n, 100*pct))
+  names(tbl)=c(xlabel,"n(%)")
+  if (showTable) pander(tbl)
   if (plot){
     freqTable=data.frame(value=rownames(n),cbind(n,pct))
     levels(freqTable$value) <- gsub(" ", "\n", levels(freqTable$value))
-    ldist=if (horizontal) 0.045 else 0.025
+    ldist=if (horizontal) 0.045 else 0.035
     if (density) {
       gr=ggplot(freqTable, aes(x=value, y=pct, fill=value)) +
         geom_bar(stat="identity") +
@@ -44,11 +50,8 @@ density=TRUE, showTable=TRUE){
       else gr=gr+geom_text(aes(label=n, y=n+ldist*max(n)), size=4)
     }
     print(gr)
-    pandoc.p("")
   }
-  tbl=data.frame(rownames(n),sprintf("%4.0f (%.2f)", n, 100*pct))
-  names(tbl)=c(xlabel,"n(%)")
-  if (showTable) pander(tbl)
+  # formatting table for invisible returning
   tbl[[1]]=as.character(tbl[[1]])
   levels(tbl[[2]])=c(levels(tbl[[2]]),"")
   tbl=rbind(c(xlabel,""),tbl)
