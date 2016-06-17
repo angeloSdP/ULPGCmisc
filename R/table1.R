@@ -1,7 +1,6 @@
 #' @title Univariate frequency table and barplot
 #' @description table1 builds a univariate frequency table with counts and percentages
 #' at each factor level, and optionally shows a barplot.
-#' @export table1
 #' @param x Variable to tabulate, which can be interpreted as factor
 #' @param xlabel Label of the variable x, to be used in figures and tables.
 #' @param plot Logical. If TRUE a barplot is printed

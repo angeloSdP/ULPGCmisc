@@ -1,7 +1,6 @@
 #' @title Pvalue formatting
 #' @description formatPval formats p-values. If pvalue is less than 0.0001 it is shown
 #' as the string "<0.0001". Else it is rounded to 4 decimals.
-#' @export formatPval
 #' @param pval pvalue to be formatted
 #' @return formatted p-value
 #'

@@ -1,7 +1,6 @@
 #' @title Bivariate frequency table and barplot
 #' @description table2 builds a bivariate frequency table with counts and percentages
 #' at each combination of factor levels factor level and optionally shows a barplot.
-#' @export table2
 #' @param x variable to tabulate, which can be interpreted as factor
 #' @param by variable for crosstabulation, also interpreted as factor
 #' @param xlabel Label of the variable x, to be used in figures and tables.
