@@ -5,7 +5,8 @@
 \title{Univariate summary}
 \usage{
 summary1(x, xlabel = NULL, plot = TRUE, ptiles = c(0.25, 0.75),
-  alphaNorm = 0.05, normalCurve = FALSE)
+  alphaNorm = 0.05, report = "simple", normalCurve = FALSE,
+  densityCurve = TRUE, rug = TRUE, addBoxplot = TRUE)
 }
 \arguments{
 \item{x}{variable to be summarized.}
@@ -19,6 +20,17 @@ summary1(x, xlabel = NULL, plot = TRUE, ptiles = c(0.25, 0.75),
 \item{alphaNorm}{Significance level for testing normality. 0.05 by default.}
 
 \item{normalCurve}{Logical. Must a normal curve be superposed to the histogram?.}
+
+\item{densityCurve}{Logical. Must a density curve be superposed to the histogram}
+
+\item{rug}{must a rug be drawn at the base of the histogram?}
+
+\item{addBoxplot}{Should a boxplot be added under the histogram?}
+
+\item{report.}{If "simple" only mean and sd (when data are normally distributed) or
+median and quartiles (when data are not normal) are shown. In other case a full report is printed,
+including also number of missing values, skewness, kurtosis, min, max and the p-value of the Shapiro
+test for normality}
 }
 \value{
 a brief summary of a continuous variable and optionally an histogram.
