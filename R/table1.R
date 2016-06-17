@@ -1,20 +1,20 @@
-#' @title Univariate frequency table and barplot
-#' @description table1 builds a univariate frequency table with counts and percentages
-#' at each factor level, and optionally shows a barplot.
-#' @param x Variable to tabulate, which can be interpreted as factor
-#' @param xlabel Label of the variable x, to be used in figures and tables.
-#' @param plot Logical. If TRUE a barplot is printed
-#' @param horizontal Logical. If TRUE bars are printed horizontally
-#' @param printFreq Logical. If TRUE frequency values are printed in the barplot
-#' @param density Logical. if TRUE barplot is printed with relative frequencies
-#' @param showTable Logical. If TRUE frequency table is printed via pander. If FALSE
-#' frequency table is returned invisibly.
-#' @return an univariate frequency table with absolute and relative frequencies, and
-#' optionally a barplot
-#' @examples
-#' letters=sample(LETTERS[1:4],120,replace=TRUE)
-#' table1(letters,xlabel="letters in a text",horizontal=TRUE,density=TRUE,printFreq=FALSE, showTable=TRUE)
-#'
+# @title Univariate frequency table and barplot
+# @description table1 builds a univariate frequency table with counts and percentages
+# at each factor level, and optionally shows a barplot.
+# @param x Variable to tabulate, which can be interpreted as factor
+# @param xlabel Label of the variable x, to be used in figures and tables.
+# @param plot Logical. If TRUE a barplot is printed
+# @param horizontal Logical. If TRUE bars are printed horizontally
+# @param printFreq Logical. If TRUE frequency values are printed in the barplot
+# @param density Logical. if TRUE barplot is printed with relative frequencies
+# @param showTable Logical. If TRUE frequency table is printed via pander. If FALSE
+# frequency table is returned invisibly.
+# @return an univariate frequency table with absolute and relative frequencies, and
+# optionally a barplot
+# @examples
+# letters=sample(LETTERS[1:4],120,replace=TRUE)
+# table1(letters,xlabel="letters in a text",horizontal=TRUE,density=TRUE,printFreq=FALSE, showTable=TRUE)
+#
 table1=function(x,xlabel=NULL,plot=TRUE,horizontal=FALSE, printFreq=TRUE,
 density=TRUE, showTable=TRUE){
   panderOptions('knitr.auto.asis', FALSE)
