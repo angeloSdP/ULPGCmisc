@@ -19,3 +19,8 @@ freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
 x=rnorm(50,10,2)
 summary1(x)
 summary1(x,normalCurve=TRUE)
+
+x=rweibull(120,2,5);
+summary1(x,densityCurve=TRUE,normalCurve=TRUE,report="full",rug=TRUE)
+summary1(x,densityCurve=TRUE,normalCurve=TRUE,report="simple",rug=FALSE)
+summary1(x,densityCurve=TRUE,normalCurve=FALSE,report="full",rug=TRUE)
