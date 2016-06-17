@@ -11,6 +11,7 @@ Depends:
     pander,
     stringr,
     e1071,
+    grid,
     gridExtra
 Description: Miscellaneous functions for the usual activity of the Mathematics Department members at the University of Las Palmas de Gran Canaria
 License:  GPL (>=2)
