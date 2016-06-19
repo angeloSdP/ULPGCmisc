@@ -32,7 +32,7 @@ summary1(x, xlabel = NULL, plot = TRUE, ptiles = c(0.25, 0.75),
 
 \item{histColor}{color for plotting the histogram.}
 
-\item{report.}{If "simple" only mean and sd (when data are normally distributed) or
+\item{fullreport.}{If FALSE only mean and sd (when data are normally distributed) or
 median and quartiles (when data are not normal) are shown. In other case a full report is printed,
 including also number of missing values, skewness, kurtosis, min, max and the p-value of the Shapiro
 test for normality}

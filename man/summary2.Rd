@@ -25,18 +25,18 @@ summary2(x, by, xlabel = NULL, bylabel = NULL, plot = TRUE,
 
 \item{alphaNorm}{Significance level for testing normality. 0.05 by default.}
 
+\item{boxplot}{Should a boxplot be added under the histograms?}
+
 \item{rug}{must a rug be drawn at the base of the histograms?}
 
 \item{densityCurve}{Logical. Must a density curve be superposed to the histograms?}
 
 \item{normalCurve}{Logical. Must a normal curve be superposed to the histograms?}
 
-\item{report.}{If "simple" only mean and sd (when data are normally distributed) or
+\item{fullreport.}{If FALSE only mean and sd (when data are normally distributed) or
 median and quartiles (when data are not normal) are shown. In other case a full report is printed,
 including also number of missing values, skewness, kurtosis, min, max and the p-value of the Shapiro
 test for normality}
-
-\item{addBoxplot}{Should a boxplot be added under the histograms?}
 
 \item{histColor}{colors for plotting the histograms.}
 }

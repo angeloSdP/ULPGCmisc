@@ -62,7 +62,7 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
         scale_y_continuous(labels=percent,limits=c(0,1.15*max(pct)))
     } else{
       gr=ggplot(freqTable, aes(x=value, y=n, fill=value)) +
-        geom_bar(stat="identity") + facet_grid(. ~ by) +
+        geom_bar(stat="identity") + facet_grid(by ~ .) +
         scale_y_continuous(limits=c(0,1.15*max(freqTable$n)))
     }
     gr= gr + xlab(xlabel) + ylab("Frequency") + ggtitle(paste(xlabel,"by",bylabel)) +
