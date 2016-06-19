@@ -58,7 +58,7 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
     ldist=if (horizontal) 0.1 else 0.035
     if (density) {
       gr=ggplot(freqTable, aes(x=value, y=pct, fill=value)) +
-        geom_bar(stat="identity") + facet_grid(. ~ by) +
+        geom_bar(stat="identity") + facet_grid(by ~ .) +
         scale_y_continuous(labels=percent,limits=c(0,1.15*max(pct)))
     } else{
       gr=ggplot(freqTable, aes(x=value, y=n, fill=value)) +
