@@ -5,8 +5,9 @@
 \title{Univariate summary}
 \usage{
 summary1(x, xlabel = NULL, plot = TRUE, ptiles = c(0.25, 0.75),
-  alphaNorm = 0.05, report = "simple", normalCurve = FALSE,
-  densityCurve = TRUE, rug = TRUE, addBoxplot = TRUE)
+  alphaNorm = 0.05, fullreport = FALSE, normalCurve = FALSE,
+  densityCurve = TRUE, rug = TRUE, boxplot = TRUE, addMeanLine = TRUE,
+  histColor = "#00A4FF")
 }
 \arguments{
 \item{x}{variable to be summarized.}
@@ -19,13 +20,17 @@ summary1(x, xlabel = NULL, plot = TRUE, ptiles = c(0.25, 0.75),
 
 \item{alphaNorm}{Significance level for testing normality. 0.05 by default.}
 
-\item{normalCurve}{Logical. Must a normal curve be superposed to the histogram?.}
+\item{normalCurve}{Logical. Must a normal curve be superposed to the histogram?}
 
-\item{densityCurve}{Logical. Must a density curve be superposed to the histogram}
+\item{densityCurve}{Logical. Must a density curve be superposed to the histogram?}
 
 \item{rug}{must a rug be drawn at the base of the histogram?}
 
-\item{addBoxplot}{Should a boxplot be added under the histogram?}
+\item{boxplot}{Should a boxplot be added under the histogram?}
+
+\item{addMeanLine}{Should a vertical line be drawn at the position of the mean?}
+
+\item{histColor}{color for plotting the histogram.}
 
 \item{report.}{If "simple" only mean and sd (when data are normally distributed) or
 median and quartiles (when data are not normal) are shown. In other case a full report is printed,

@@ -1,6 +1,7 @@
 # -----------------------------------------------------------------------------------
 # Ejemplos de uso
 # -----------------------------------------------------------------------------------
+library(ULPGCmisc)
 symptom=sample(LETTERS[1:4],120,replace=TRUE)
 disease=sample(c("Yes","No"),120,replace=TRUE)
 x=symptom
@@ -21,6 +22,59 @@ summary1(x)
 summary1(x,normalCurve=TRUE)
 
 x=rweibull(120,2,5);
-summary1(x,densityCurve=TRUE,normalCurve=TRUE,report="full",rug=TRUE)
-summary1(x,densityCurve=TRUE,normalCurve=TRUE,report="simple",rug=FALSE)
-summary1(x,densityCurve=TRUE,normalCurve=FALSE,report="full",rug=TRUE)
+summary1(x,densityCurve=TRUE,normalCurve=TRUE,rug=TRUE)
+summary1(x,densityCurve=TRUE,normalCurve=TRUE,fullreport=TRUE,rug=FALSE)
+summary1(x,densityCurve=TRUE,normalCurve=FALSE,rug=TRUE)
+summary1(x,densityCurve=FALSE,normalCurve=FALSE,,fullreport=TRUE,rug=FALSE,boxplot = FALSE)
+
+plotSummary2(x,by=factor(rep("",length(x))),boxplot=TRUE,histogram=TRUE)
+
+# Gráficos summary2
+x=rweibull(120,2,5)
+by=sample(c("yes","no"),120,replace=TRUE,prob=c(0.6,0.4))
+
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE)
+plotSummary2(x,by, boxplot=FALSE,histogram=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,densityCurve=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,normalCurve=TRUE, rug=FALSE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,densityCurve=TRUE,faceted=TRUE, rug=FALSE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,densityCurve=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,normalCurve=TRUE,faceted=TRUE, rug=FALSE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,normalCurve=TRUE,densityCurve=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE,densityCurve=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE,densityCurve=TRUE,faceted=FALSE)
+
+x=c(rnorm(50,10,2),rnorm(50,8,1),rnorm(50,14,3),rnorm(50,10,0.5))
+by=sort(rep(letters[1:4],50))
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE)
+plotSummary2(x,by, boxplot=FALSE,histogram=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,densityCurve=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,normalCurve=TRUE, rug=FALSE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,densityCurve=TRUE,faceted=TRUE, rug=FALSE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,densityCurve=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,normalCurve=TRUE,faceted=TRUE, rug=FALSE)
+plotSummary2(x,by, boxplot=TRUE,histogram=FALSE,normalCurve=TRUE,densityCurve=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE,densityCurve=TRUE,faceted=TRUE)
+plotSummary2(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE,densityCurve=TRUE,faceted=FALSE)
+
+x=c(rnorm(50,10,2),rnorm(50,8,1),rnorm(50,14,3),rnorm(50,10,0.5))
+by=sort(rep(letters[1:4],50))
+summary2(x,by, fullreport=TRUE,plot=FALSE)
+summary2(x,by, fullreport=FALSE,plot=FALSE)
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               x=rnorm(100,10,2)
+x=rweibull(100,10,2)
+by=sample(c("Yes","No"),100,replace=TRUE,prob=c(0.7,0.3))
+summary2(x,by=by)
+summary2(x,by=by,normalCurve=TRUE,densityCurve=FALSE)
+
+
