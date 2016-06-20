@@ -19,7 +19,7 @@ freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
 
 x=rnorm(50,10,2)
 summary1(x)
-summary1(x,normalCurve=TRUE)
+summary1(x,normalCurve=TRUE,fullreport=TRUE)
 
 x=rweibull(120,2,5);
 summary1(x,densityCurve=TRUE,normalCurve=TRUE,rug=TRUE)
@@ -27,7 +27,7 @@ summary1(x,densityCurve=TRUE,normalCurve=TRUE,fullreport=TRUE,rug=FALSE)
 summary1(x,densityCurve=TRUE,normalCurve=FALSE,rug=TRUE)
 summary1(x,densityCurve=FALSE,normalCurve=FALSE,,fullreport=TRUE,rug=FALSE,boxplot = FALSE)
 
-plotSummary2(x,by=factor(rep("",length(x))),boxplot=TRUE,histogram=TRUE)
+plotSummary2(x,by=NULL,boxplot=TRUE,histogram=TRUE)
 
 # Gráficos summary2
 x=rweibull(120,2,5)
@@ -75,6 +75,20 @@ summary2(x,by, fullreport=FALSE,plot=FALSE)
 x=rweibull(100,10,2)
 by=sample(c("Yes","No"),100,replace=TRUE,prob=c(0.7,0.3))
 summary2(x,by=by)
-summary2(x,by=by,normalCurve=TRUE,densityCurve=FALSE)
+summary(x,by=by,normalCurve=TRUE,densityCurve=FALSE)
 
+
+summarize(x,by=by)
+summarize(x)
+summarize(x,by=by, fullreport=TRUE)
+summarize(x, fullreport=TRUE)
+
+describe(x,fullreport = TRUE)
+describe(x,by=by, fullreport=TRUE)
+
+symptom=sample(LETTERS[1:4],120,replace=TRUE)
+disease=sample(c("Yes","No"),120,replace=TRUE)
+
+describe(symptom,by=disease)
+describe(symptom)
 

@@ -1,0 +1,35 @@
+---
+title: "frecuencias"
+author: "Angelo"
+date: "16 de junio de 2016"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results='asis')
+library(ULPGCmisc)
+```
+
+```{r}
+symptom=sample(LETTERS[1:4],120,replace=TRUE)
+disease=sample(c("Yes","No"),120,replace=TRUE)
+
+t1=table1(symptom,horizontal=TRUE,density=TRUE,printFreq=FALSE, showTable=TRUE)
+```
+
+
+```{r}
+t2=table2(symptom,by=disease,horizontal=FALSE,density=TRUE,printFreq=TRUE, showTable=TRUE)
+```
+
+```{r}
+freqTable(symptom,by=disease,horizontal=FALSE,density=FALSE,printFreq=TRUE, showTable=TRUE)
+```
+
+```{r}
+zz=rnorm(200,20,3)
+summary1(zz)
+summary1(zz,normalCurve=TRUE)
+```
+

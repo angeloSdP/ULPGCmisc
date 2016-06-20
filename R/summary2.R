@@ -10,7 +10,7 @@
 #' @param by variable for identifying groups, interpreted as factor
 #' @param bylabel Label of the variable by, to be used in figures and tables.
 #' @param xlabel Label of the variable x, to be used in figures and tables.
-#' @param plot Logical. If TRUE a barplot is printed
+#' @param plot Logical. If TRUE a plot is printed
 #' @param ptiles ptiles to print with the median when variable is not normal.
 #' @param alphaNorm Significance level for testing normality. 0.05 by default.
 #' @param fullreport. If FALSE only mean and sd (when data are normally distributed) or
@@ -26,7 +26,8 @@
 #'
 summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
                   fullreport=FALSE,boxplot=TRUE,histogram=TRUE, rug=TRUE,faceted=TRUE,
-                  densityCurve=TRUE, normalCurve=FALSE, addMeanLine=TRUE,digits=2){
+                  densityCurve=TRUE, normalCurve=FALSE, addMeanLine=TRUE,digits=2,
+                  showSummary=TRUE){
   if (is.null(xlabel)) xlabel=deparse(substitute(x))
   if (is.null(bylabel)) bylabel=deparse(substitute(by))
   if (is.numeric(by)&length(unique(by))>8){
@@ -83,7 +84,7 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
     names(resumen)[ncol(resumen)]="Comparison test"
     resumen
   }
-  pander(resumen,split.table=90)
+  if (showSummary) pander(resumen,split.table=90)
   if (plot) plotSummary2(x,by,xlabel,bylabel,boxplot,histogram,rug,faceted,
                          densityCurve, normalCurve,addMeanLine)
   return(invisible(resumen))

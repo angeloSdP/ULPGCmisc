@@ -23,8 +23,8 @@
 #' @return a brief summary of a continuous variable and optionally an histogram.
 #'
 summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
-                  fullreport=FALSE,normalCurve=FALSE,densityCurve=TRUE,rug=TRUE,
-                  boxplot=TRUE, addMeanLine=TRUE,histColor="#00A4FF"){
+                  fullreport=FALSE,histogram=TRUE,boxplot=TRUE,rug=TRUE,
+                  densityCurve=TRUE,normalCurve=FALSE,addMeanLine=TRUE,showSummary=TRUE){
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('digits',4)
@@ -38,45 +38,13 @@ summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
     else if (normal) resumen=data.frame(xlabel, meansd(x))
     else resumen=data.frame(xlabel,medianPtiles(x,ptiles))
     names(resumen)=c("Variable",rsname)
-    pander(resumen)
+    if (showSummary) pander(resumen)
   } else{
     resumen=fullReport(x,xlabel)
     resumen$shapiro.test.Pvalue=formatPval(shpv)
-    pander(resumen,split.table=90)
+    if (showSummary) pander(resumen,split.table=90)
   }
-  if (plot&!is.na(normal)){
-    x=x[!is.na(x)]
-    gr <- qplot(x, geom = 'blank') +
-      geom_histogram(aes(y=..density..),
-                     breaks=seq(min(x),max(x),length=nclass.Sturges(x)),
-                     col=histColor, fill=histColor, alpha = .4) + ylab("Frequency")
-    if (addMeanLine) gr<-gr+geom_vline(aes(xintercept=mean(x, na.rm=T)),   # Ignore NA values for mean
-                      color=histColor, linetype="dashed", size=1)
-    if (rug) gr<-gr+ geom_rug()
-    if (densityCurve)
-      gr=gr+geom_line(aes(y = ..density.., colour = 'Empirical'), stat = 'density',size=0.8)
-    if (normalCurve)
-      gr=gr+stat_function(fun = dnorm, args=list(mean=mean(x), sd=sd(x)), aes(colour = 'Normal'),size=0.8)
-    if (normalCurve|densityCurve)
-      gr=gr+scale_colour_manual(name = 'Density', values = c('blue', 'red')) +
-      theme(legend.position = c(0.85, 0.85))
-    if (boxplot){
-      gr <- gr + theme(#legend.position="none",
-                       axis.text.x=element_blank(),
-                       axis.ticks.x=element_blank(),
-                       plot.margin=unit(c(0.2,0.2,-0.4,0.2), "cm"))
-      bp <- ggplot(data.frame(x), aes(x=factor(""),y=x)) + geom_boxplot(fill=histColor,col=histColor, alpha=.4)+
-        coord_flip() + xlab("") + ylab(xlabel) +
-        stat_summary(fun.y=mean, geom="point", shape=15, size=3, col=histColor)+
-        theme(plot.margin=unit(c(-0.4,0.2,0.2,0.2), "cm"))
-      p1 <- ggplot_gtable(ggplot_build(gr))
-      p2 <- ggplot_gtable(ggplot_build(bp))
-      maxWidth = unit.pmax(p1$widths[2:3], p2$widths[2:3])
-      p1$widths[2:3] <- maxWidth
-      p2$widths[2:3] <- maxWidth
-      gr<-grid.arrange(p1, p2, ncol=1, nrow=2, widths=c(4), heights=c(4.5, 0.75))
-    } else gr <- gr + xlab(xlabel)
-    plot(gr)
-  }
+  if (plot&!is.na(normal))
+    plotSummary1(x,xlabel,histogram,boxplot,rug,densityCurve,normalCurve,addMeanLine)
   return(invisible(resumen))
 }

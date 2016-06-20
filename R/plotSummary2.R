@@ -23,10 +23,13 @@ plotSummary2 <- function(x,by,xlabel=NULL,bylabel=NULL,boxplot=TRUE,histogram=TR
     })
     plots.grobs.eq.widths.aligned
   }
+  if (is.null(xlabel)) xlabel=deparse(substitute(x))
+  if (is.null(by)) {
+    by=factor(rep("",length(x)))
+    bylabel=""
+  } else if (is.null(bylabel)) bylabel=deparse(substitute(by))
   dat=data.frame(x,by)
   if (faceted) dat$f = factor(rep(" ",nrow(dat)))
-  if (is.null(xlabel)) xlabel=deparse(substitute(x))
-  if (is.null(bylabel)) bylabel=deparse(substitute(by))
   stats <- aggregate(x~by, dat, function(x)
     c(mean=mean(x), sd=sd(x),bin=diff(range(x))/nclass.Sturges(x)))
   stats <- data.frame(by=stats[,1],stats[,2])
