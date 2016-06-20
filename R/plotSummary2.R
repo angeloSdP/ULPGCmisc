@@ -33,6 +33,7 @@ plotSummary2 <- function(x,by,xlabel=NULL,bylabel=NULL,boxplot=TRUE,histogram=TR
   stats <- aggregate(x~by, dat, function(x)
     c(mean=mean(x), sd=sd(x),bin=diff(range(x))/nclass.Sturges(x)))
   stats <- data.frame(by=stats[,1],stats[,2])
+  bw=round(min(stats$bin[stats$bin>0]),1)
   gr<-ggplot(dat)
   if (boxplot)
     bp <- gr+ aes(x=by, y=x, fill=by, col=by) + geom_boxplot(alpha=.5)+
@@ -43,7 +44,7 @@ plotSummary2 <- function(x,by,xlabel=NULL,bylabel=NULL,boxplot=TRUE,histogram=TR
     if (rug) gr<-gr+ geom_rug()
     if (histogram)
       gr<- gr + geom_histogram(aes(y=..density..),#,fill=by,col=by),
-                               binwidth=round(min(stats$bin),1),
+                               binwidth=bw,
                                alpha=.5, position="identity")
     if (densityCurve)
       gr<-gr + geom_density(aes(group=by),alpha=0.2,size=1)
@@ -60,8 +61,8 @@ plotSummary2 <- function(x,by,xlabel=NULL,bylabel=NULL,boxplot=TRUE,histogram=TR
                              function(i) with(stats[i,],
                                               data.frame(by, xx=c(xmin,xx,xmax),
                                                          y=c(0,dnorm(xx,mean=mean,sd=sd),0)))))
-      gr<-gr+geom_line(data=datn, aes(xx, y,group=by,col=by),size=1)
-      gr<-gr+geom_polygon(data=datn, aes(xx, y,group=by,fill=by),alpha=0.2)
+      gr<-gr+geom_line(data=datn, aes(xx, y,group=by,col=by),linetype=3,size=1)
+      gr<-gr+geom_polygon(data=datn, aes(xx, y,group=by,fill=by),alpha=0.2,linetype=3,size=1)
       }
 
     if (faceted) gr <- gr + facet_grid(by~.) + guides(colour=FALSE, fill=FALSE)
