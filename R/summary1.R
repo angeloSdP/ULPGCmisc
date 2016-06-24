@@ -27,7 +27,7 @@ summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('digits',4)
-  if (is.null(xlabel)) xlabel=deparse(substitute(x))
+  if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
   shpv=shap_pval(x)
   normal=if (is.na(shpv)) NA else shpv>=alphaNorm
   if (!fullreport){

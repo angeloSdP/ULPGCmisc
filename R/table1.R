@@ -20,7 +20,7 @@ density=TRUE, showTable=TRUE){
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('table.style',"multiline")
-  if (is.null(xlabel)) xlabel=deparse(substitute(x))
+  if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
   x=factor(x)
   n=table(x)
   pct=prop.table(n)

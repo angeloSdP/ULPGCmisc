@@ -20,6 +20,8 @@
 #'
 describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=TRUE,
                   fullreport=FALSE, showDescriptives=TRUE){
+  if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
+  if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
   if (is.factor(x)|is.character(x))
     freqTable(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
               showTable = showDescriptives)

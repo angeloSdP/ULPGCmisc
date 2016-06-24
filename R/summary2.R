@@ -27,8 +27,8 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
                   fullreport=FALSE,boxplot=TRUE,histogram=TRUE, rug=TRUE,faceted=TRUE,
                   densityCurve=TRUE, normalCurve=FALSE, addMeanLine=TRUE,digits=2,
                   showSummary=TRUE){
-  if (is.null(xlabel)) xlabel=deparse(substitute(x))
-  if (is.null(bylabel)) bylabel=deparse(substitute(by))
+  if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
+  if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
   if (is.numeric(by)&length(unique(by))>8){
     breaks <- pretty(by, n = min(nclass.Sturges(by),6), min.n = 1)
     lb=length(breaks)

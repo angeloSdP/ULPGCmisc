@@ -84,3 +84,9 @@ disease=sample(c("Yes","No"),120,replace=TRUE)
 describe(symptom,by=disease)
 a=describe(symptom)
 
+library(openxlsx)
+setwd("~/gDrive/cursoRMedicina/")
+telde <- read.xlsx("endocrino.xlsx",sheet=1)
+library(ULPGCmisc)
+with(telde,describe(A1C, by=DM))
+

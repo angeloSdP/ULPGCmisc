@@ -30,14 +30,14 @@
 summarize=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
                   fullreport=FALSE,histogram=TRUE,boxplot=TRUE, rug=TRUE,faceted=TRUE,
                   densityCurve=TRUE, normalCurve=FALSE, addMeanLine=TRUE,digits=2,showSummary=TRUE){
-  if (is.null(xlabel)) xlabel=deparse(substitute(x))
+  if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
   if (is.null(by)){
     summary1(x=x,xlabel=xlabel, plot=plot, ptiles=ptiles, alphaNorm=alphaNorm,
              fullreport=fullreport,histogram=histogram,boxplot=boxplot,rug=rug,
              densityCurve=densityCurve,normalCurve=normalCurve,addMeanLine=addMeanLine,
              showSummary=showSummary)
   } else{
-    if (is.null(bylabel)) bylabel=deparse(substitute(by))
+    if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
     summary2(x=x,by=by,xlabel=xlabel,bylabel=bylabel, plot=plot, ptiles=ptiles, alphaNorm=alphaNorm,
              fullreport=fullreport,histogram=histogram,boxplot=boxplot,rug=rug,faceted=faceted,
              densityCurve=densityCurve,normalCurve=normalCurve,addMeanLine=addMeanLine,digits=digits,

@@ -48,3 +48,13 @@ fullReport=function(x,xlabel=NULL){
   rownames(resumen)=NULL
   resumen
 }
+# ---------------------------------------
+# Generates a label from a variable name
+# ---------------------------------------
+toLabel=function(varname){
+  if (grepl("[$]",varname)){
+    svn= strsplit(varname,"[$]")[[1]]
+    varname=svn[length(svn)]
+  }
+  varname
+}
