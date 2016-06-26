@@ -11,15 +11,15 @@ freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
 x=rnorm(500,10,2)
 summarize(x)
 summarize(x,normalCurve=TRUE)
-summarize(x,normalCurve=TRUE,fullreport=TRUE)
+summarize(x,normalCurve=TRUE,report="complete")
 
 x=rweibull(120,2,5);
-summarize(x,densityCurve=TRUE,normalCurve=TRUE,rug=TRUE,fullreport=TRUE)
-summarize(x,densityCurve=TRUE,normalCurve=TRUE,fullreport=TRUE,rug=FALSE)
+summarize(x,densityCurve=TRUE,normalCurve=TRUE,rug=TRUE,report="complete")
+summarize(x,densityCurve=TRUE,normalCurve=TRUE,report="complete",rug=FALSE)
 summarize(x,densityCurve=TRUE,normalCurve=FALSE,rug=TRUE)
-summarize(x,densityCurve=FALSE,normalCurve=FALSE,,fullreport=TRUE,rug=FALSE,boxplot = FALSE)
+summarize(x,densityCurve=FALSE,normalCurve=FALSE,,report="complete",rug=FALSE,boxplot = FALSE)
 summarize(x,boxplot = TRUE,histogram=FALSE)
-summarize(x,fullreport=TRUE)
+summarize(x,report="complete")
 
 # Gráficos summarize
 x=rweibull(120,2,5)
@@ -59,11 +59,11 @@ summarize(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE,densityCurve=TRUE,f
 
 x=c(rnorm(50,10,2),rnorm(50,8,1),rnorm(50,14,3),rnorm(50,10,0.5))
 by=sort(rep(letters[1:4],50))
-summarize(x,by, fullreport=TRUE,plot=TRUE)
-summarize(x,by, fullreport=FALSE,plot=FALSE)
+summarize(x,by, report="complete",plot=TRUE)
+summarize(x,by, plot=FALSE)
 
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               x=rnorm(100,10,2)
+x=rnorm(100,10,2)
 x=rweibull(100,10,2)
 by=sample(c("Yes","No"),100,replace=TRUE,prob=c(0.7,0.3))
 summarize(x,by=by)
@@ -72,11 +72,11 @@ summarize(x,by=by,normalCurve=TRUE,densityCurve=FALSE)
 
 summarize(x,by=by)
 summarize(x)
-summarize(x,by=by, fullreport=TRUE)
-summarize(x, fullreport=TRUE)
+summarize(x,by=by, report="complete")
+summarize(x, report="complete")
 
-describe(x,fullreport = TRUE)
-describe(x,by=by, fullreport=TRUE)
+describe(x,report = "complete")
+describe(x,by=by, report="complete")
 
 symptom=sample(LETTERS[1:4],120,replace=TRUE)
 disease=sample(c("Yes","No"),120,replace=TRUE)
@@ -88,9 +88,10 @@ library(openxlsx)
 setwd("~/gDrive/cursoRMedicina/")
 telde <- read.xlsx("endocrino.xlsx",sheet=1)
 library(ULPGCmisc)
-with(telde,describe(A1C, by=DM))
+
 
 telde$DM=ordered(telde$DM,levels=c(1,0),labels=c("DM+","DM-"))
 telde$SEXO=ordered(telde$SEXO,levels=c(1,0),labels=c("Mujer","Hombre"))
 freqTable(telde$SEXO)
 freqTable(telde$DM,by=telde$SEXO)
+with(telde,describe(A1C, by=DM))
