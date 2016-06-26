@@ -90,3 +90,7 @@ telde <- read.xlsx("endocrino.xlsx",sheet=1)
 library(ULPGCmisc)
 with(telde,describe(A1C, by=DM))
 
+telde$DM=ordered(telde$DM,levels=c(1,0),labels=c("DM+","DM-"))
+telde$SEXO=ordered(telde$SEXO,levels=c(1,0),labels=c("Mujer","Hombre"))
+freqTable(telde$SEXO)
+freqTable(telde$DM,by=telde$SEXO)

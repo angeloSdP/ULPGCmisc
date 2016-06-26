@@ -12,19 +12,20 @@
 #' @param bylabel Label of the variable by, to be used in figures and tables.
 #' @param xlabel Label of the variable x, to be used in figures and tables.
 #' @param plot Logical. If TRUE a plot is printed
-#' @param fullreport. If FALSE only mean and sd (when data are normally distributed) or
-#' median and quartiles (when data are not normal) are shown. In other case a full report is printed,
-#' including also number of missing values, skewness, kurtosis, min, max and the p-value of the Shapiro
-#' test for normality
+#' @param report. If "auto" a Shapiro test is made; only mean and sd (if variable can be assumed to be
+# normal) or median and quartiles (when variable is not normal) are shown. If "meansd", only mean and sd
+# are shown; if "medianq", median and percentiles are shown. In other case a full report is printed,
+# including also number of missing values, skewness, kurtosis, min, max and the p-value of the Shapiro
+# test for normality.
 #' @return
 #'
 describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=TRUE,
-                  fullreport=FALSE, showDescriptives=TRUE){
+                  report="auto", showDescriptives=TRUE){
   if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
   if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
   if (is.factor(x)|is.character(x))
     freqTable(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
               showTable = showDescriptives)
   else summarize(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
-                 fullreport=fullreport,showSummary=showDescriptives)
+                 report=report,showSummary=showDescriptives)
 }

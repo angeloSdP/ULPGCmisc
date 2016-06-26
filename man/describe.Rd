@@ -5,7 +5,7 @@
 \title{Univariate summary of a variable for each level of a factor variable (if any is specified)}
 \usage{
 describe(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = TRUE,
-  fullreport = FALSE, showDescriptives = TRUE)
+  report = "auto", showDescriptives = TRUE)
 }
 \arguments{
 \item{x}{variable to be summarized.}
@@ -18,10 +18,7 @@ describe(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = TRUE,
 
 \item{plot}{Logical. If TRUE a plot is printed}
 
-\item{fullreport.}{If FALSE only mean and sd (when data are normally distributed) or
-median and quartiles (when data are not normal) are shown. In other case a full report is printed,
-including also number of missing values, skewness, kurtosis, min, max and the p-value of the Shapiro
-test for normality}
+\item{report.}{If "auto" a Shapiro test is made; only mean and sd (if variable can be assumed to be}
 }
 \value{
 

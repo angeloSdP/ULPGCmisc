@@ -28,7 +28,7 @@ medianPtiles=function(x, ptiles) {
 # -------------------------------------
 # Full univariate report
 # -------------------------------------
-fullReport=function(x,xlabel=NULL){
+univariateReport=function(x,xlabel=NULL){
   if (is.null(xlabel)) xlabel=deparse(substitute(x))
   q=quantile(x,prob=c(0.25,0.5,0.75),na.rm=TRUE)
   resumen=data.frame(

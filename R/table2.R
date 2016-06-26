@@ -29,9 +29,11 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
   x=factor(x)
   by=factor(by)
   tb=table(x,by)
+  N=sum(tb)
+  n=colSums(tb)
   pct=prop.table(tb,2)
   tbl2=data.frame(rownames(tb),array(sprintf("%4.0f (%.2f)", tb, 100*pct),dim=dim(tb)))
-  names(tbl2)=c(paste("\ ",bylabel,"\n",xlabel,"  \ "),paste(levels(by),"\n n (%)"))
+  #names(tbl2)=c(paste("\ ",bylabel,"\n",xlabel,"  \ "),paste(levels(by),"\n n (%)"))
   chip=tryCatch(chisq.test(tb),
                 warning=function(e){
                   if (all(dim(tb)==c(2,2))) fisher.test(tb)
@@ -41,12 +43,13 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
   pv=chip$p.value
   wsp=rep("",nrow(tbl2)-1)
   tbl2=cbind(tbl2,P=c(wsp,formatPval(pv)))
-  names(tbl2)[4]=paste("P\n",test)
   tbl1=table1(x[!is.na(by)],xlabel,plot=FALSE,showTable=FALSE)
   for (j in 2:ncol(tbl2)) levels(tbl2[,j])=c(levels(tbl2[,j]),"")
   tbl=cbind(tbl1,rbind(rep("",ncol(tbl2)-1),tbl2[,-1]))
-  names(tbl)[1:2]=c("","All \n n(%)")
-  if(showTable) pander(tbl)
+  nmby=paste(bylabel," = ",levels(by),"\n(n=",n,")",sep="")
+  ad=paste("All data\n(n=",N,")",sep="")
+  names(tbl)=c("Variable \n(levels)",ad,nmby,paste(test,"\nP"))
+  if(showTable) pander(tbl, caption="Data are summarized in absolute frequencies n(%)")
   if (plot){
     levels(x) <- gsub(" ", "\n", levels(x))
     freqTable=data.frame(tb)
@@ -73,8 +76,21 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
                                        y=pct+ldist*max(pct)), size=4)
       else gr=gr+geom_text(aes(label=n, y=n+ldist*max(n)), size=4)
     }
-    print(gr)
-    pandoc.p("")
+    z <- ggplotGrob(gr)
+    require(grid)
+    require(gtable)
+    # add label for right strip
+    strips=which(z$layout$name=="strip-right")
+    zwpos=strips[1]
+    t=min(z$layout[strips,]$t)
+    b=max(z$layout[strips,]$b)
+    l=max(z$layout$l)+1
+    z <- gtable_add_cols(z, z$widths[z$layout[zwpos, ]$l],length(z$widths) - 1)
+    z <- gtable_add_grob(z,
+                         list(rectGrob(gp = gpar(col = NA, fill = gray(0.8))),
+                              textGrob(bylabel, rot = -90, gp = gpar(col = gray(0)))),
+                         t, l, b, name = paste(runif(2)))
+    plot(z)
   }
   return(invisible(tbl))
 }

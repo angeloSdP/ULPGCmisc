@@ -5,7 +5,7 @@
 \title{Univariate summary of a variable for each level of a factor variable (if any is specified)}
 \usage{
 summarize(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = TRUE,
-  ptiles = c(0.25, 0.75), alphaNorm = 0.05, fullreport = FALSE,
+  ptiles = c(0.25, 0.75), alphaNorm = 0.05, report = "auto",
   histogram = TRUE, boxplot = TRUE, rug = TRUE, faceted = TRUE,
   densityCurve = TRUE, normalCurve = FALSE, addMeanLine = TRUE,
   digits = 2, showSummary = TRUE)
@@ -33,10 +33,7 @@ summarize(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = TRUE,
 
 \item{normalCurve}{Logical. Must a normal curve be superposed to the histograms?}
 
-\item{fullreport.}{If FALSE only mean and sd (when data are normally distributed) or
-median and quartiles (when data are not normal) are shown. In other case a full report is printed,
-including also number of missing values, skewness, kurtosis, min, max and the p-value of the Shapiro
-test for normality}
+\item{report.}{If "auto" a Shapiro test is made; only mean and sd (if variable is accepted to be}
 
 \item{histogram.}{Should a histogram be drawn for each level of the factor variable?}
 

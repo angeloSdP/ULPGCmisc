@@ -21,7 +21,7 @@ density=TRUE, showTable=TRUE){
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('table.style',"multiline")
   if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
-  x=factor(x)
+  if (!is.factor(x)) x=factor(x)
   n=table(x)
   pct=prop.table(n)
   tbl=data.frame(rownames(n),sprintf("%4.0f (%.2f)", n, 100*pct))
@@ -34,11 +34,13 @@ density=TRUE, showTable=TRUE){
     if (density) {
       gr=ggplot(freqTable, aes(x=value, y=pct, fill=value)) +
         geom_bar(stat="identity") +
-        scale_y_continuous(labels=percent,limits=c(0,1.1*max(pct)))
+        scale_y_continuous(labels=percent,limits=c(0,1.1*max(pct)))+
+        scale_x_discrete(limits=levels(x))
     } else{
       gr=ggplot(freqTable, aes(x=value, y=n, fill=value)) +
         geom_bar(stat="identity") +
-        scale_y_continuous(limits=c(0,1.1*max(n)))
+        scale_y_continuous(limits=c(0,1.1*max(n)))+
+        scale_x_discrete(limits=levels(x))
     }
     gr= gr + xlab(xlabel) + ylab("Frequency") + ggtitle(xlabel) +
       guides(fill=FALSE)

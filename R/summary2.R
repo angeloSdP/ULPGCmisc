@@ -12,10 +12,10 @@
 # @param plot Logical. If TRUE a plot is printed
 # @param ptiles ptiles to print with the median when variable is not normal.
 # @param alphaNorm Significance level for testing normality. 0.05 by default.
-# @param fullreport. If FALSE only mean and sd (when data are normally distributed) or
-# median and quartiles (when data are not normal) are shown. In other case a full report is printed,
-# including also number of missing values, skewness, kurtosis, min, max and the p-value of the Shapiro
-# test for normality
+# @param fullReport. If FALSE only mean and sd (when data are normally distributed) or
+# median and quartiles (when data are not normal) are shown. In other case a full univariate report is
+# printed,including also number of missing values, skewness, kurtosis, min, max and the p-value of the
+# Shapiro test for normality
 # @param normalCurve Logical. Must a normal curve be superposed to the histograms?
 # @param densityCurve Logical. Must a density curve be superposed to the histograms?
 # @param rug must a rug be drawn at the base of the histograms?
@@ -24,7 +24,7 @@
 # @return
 #
 summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
-                  fullreport=FALSE,boxplot=TRUE,histogram=TRUE, rug=TRUE,faceted=TRUE,
+                  fullReport=FALSE,boxplot=TRUE,histogram=TRUE, rug=TRUE,faceted=TRUE,
                   densityCurve=TRUE, normalCurve=FALSE, addMeanLine=TRUE,digits=2,
                   showSummary=TRUE){
   if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
@@ -35,8 +35,10 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
     if (lb>8) breaks <- pretty(by, n =lb%/%2, min.n = 1)
     by=cut(by,breaks=breaks)
   }
-  by=factor(by)
+  if (!is.factor(by)) by=factor(by)
   shapiro_pvs=tapply(x,by,shap_pval)
+  n=tapply(x,by,function(x) length(na.omit(x)))
+  N=sum(n)
   if (any(is.na(shapiro_pvs))) shapiro_pvs[is.na(shapiro_pvs)]=1
   normal=all(shapiro_pvs>=alphaNorm)
   nl=length(levels(by))
@@ -67,12 +69,15 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
       test="Kruskal test"
     }
   }
-  if (!fullreport){
+  if (!fullReport){
     resumen=data.frame(xlabel,msd,matrix(resum1,nrow=1),pval)
-    nmby=paste(bylabel,"=",levels(by),sep="")
-    names(resumen)=c("Variable",rsname,nmby,paste(test,"P"))
+    nmby=paste(bylabel," = ",levels(by),"\n (n=",n,")",sep="")
+    ad=paste("All data\n(n=",N,")")
+    names(resumen)=c("Variable",ad,nmby,paste(test,"\nP"))
+    if (showSummary) pander(resumen,split.table=90,keep.line.breaks=TRUE,
+                            caption=paste("Data are summarized as",rsname))
   } else {
-    resumen=do.call(rbind,tapply(x,by,fullReport))
+    resumen=do.call(rbind,tapply(x,by,univariateReport))
     resumen$Variable=rownames(resumen)
     rownames(resumen)=NULL
     resumen$shapiro.test.Pvalue=sapply(shapiro_pvs,formatPval)
@@ -81,9 +86,8 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
     pw=rep("",nrow(resumen)-1)
     resumen=cbind(Variable=c(xlabel,pw),resumen,P=c(pw,pval), test=c(pw,paste("(",test,")",sep="")))
     names(resumen)[ncol(resumen)]="Comparison test"
-    resumen
+    if (showSummary) pander(resumen,split.table=90,keep.line.breaks=TRUE)
   }
-  if (showSummary) pander(resumen,split.table=90)
   if (plot) plotSummary2(x,by,xlabel,bylabel,boxplot,histogram,rug,faceted,
                          densityCurve, normalCurve,addMeanLine)
   return(invisible(resumen))
