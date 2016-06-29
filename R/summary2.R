@@ -71,8 +71,8 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
   }
   if (!fullReport){
     resumen=data.frame(xlabel,msd,matrix(resum1,nrow=1),pval)
-    nmby=paste(bylabel," = ",levels(by),"\n (n=",n,")",sep="")
-    ad=paste("All data\n(n=",N,")")
+    nmby=paste(bylabel," = ",levels(by),"\n(n=",n,")",sep="")
+    ad=paste("All data\n(n=",N,")",sep="")
     names(resumen)=c("Variable",ad,nmby,paste(test,"\nP"))
     if (showSummary) pander(resumen,split.table=90,keep.line.breaks=TRUE,
                             caption=paste("Data are summarized as",rsname))

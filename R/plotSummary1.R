@@ -16,7 +16,8 @@ plotSummary1 <- function(x,xlabel=NULL,histogram=TRUE,boxplot=TRUE,
     if (densityCurve)
       gr=gr+geom_line(aes(y = ..density.., colour = 'Empirical'), stat = 'density',size=0.8)
     if (normalCurve)
-      gr=gr+stat_function(fun = dnorm, args=list(mean=mean(x), sd=sd(x)), aes(colour = 'Normal'),size=0.8)
+      gr=gr+stat_function(fun = dnorm, args=list(mean=mean(x), sd=sd(x)), aes(colour = 'Normal'),
+                          size=0.8)
     if (normalCurve|densityCurve)
       gr=gr+scale_colour_manual(name = 'Density', values = c('blue', 'red')) +
       theme(legend.position = c(0.85, 0.85))
