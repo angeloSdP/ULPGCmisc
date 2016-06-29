@@ -84,10 +84,11 @@ disease=sample(c("Yes","No"),120,replace=TRUE)
 describe(symptom,by=disease)
 a=describe(symptom)
 
-library(openxlsx)
+
 setwd("~/gDrive/cursoRMedicina/")
+library(openxlsx)
 telde <- read.xlsx("endocrino.xlsx",sheet=1)
-library(ULPGCmisc)
+for (i in 1:ncol(telde)) if (length(unique(telde[,i]))==2) telde[,i]=factor(telde[,i])
 
 
 telde$DM=ordered(telde$DM,levels=c(1,0),labels=c("DM+","DM-"))
@@ -95,3 +96,11 @@ telde$SEXO=ordered(telde$SEXO,levels=c(1,0),labels=c("Mujer","Hombre"))
 freqTable(telde$SEXO)
 freqTable(telde$DM,by=telde$SEXO)
 with(telde,describe(A1C, by=DM))
+describe(telde$TALLA)
+
+describe(telde[,1:10])
+
+describe(telde[,1:10],by=telde$DM)
+
+
+

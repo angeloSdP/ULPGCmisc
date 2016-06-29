@@ -19,13 +19,44 @@
 # test for normality.
 #' @return
 #'
-describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=TRUE,
+describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
                   report="auto", showDescriptives=TRUE){
-  if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
+  desc=function(x,by=NULL,xlabel=xlabel,bylabel=bylabel, plot=plot,
+                    report="auto", showDescriptives=TRUE){
+    if (is.factor(x)|is.character(x))
+      freqTable(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
+                showTable = showDescriptives)
+    else summarize(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
+                   report=report,showSummary=showDescriptives)
+  }
+  panderOptions('knitr.auto.asis', FALSE)
+  panderOptions('keep.line.breaks', TRUE)
+  panderOptions('table.style',"multiline")
   if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
-  if (is.factor(x)|is.character(x))
-    freqTable(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
-              showTable = showDescriptives)
-  else summarize(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
-                 report=report,showSummary=showDescriptives)
+  if (is.null(xlabel)){
+    if (is.data.frame(x)) xlabel=names(x) else
+        xlabel=toLabel(deparse(substitute(x)))
+  } else
+    if (is.data.frame(x)&!is.null(xlabel)&length(unique(xlabel))<ncol(x)){
+      txl=data.frame(table(xlabel))
+      reps=which(txl$Freq>1)
+      for (r in reps){
+        wr=which(xlabel==txl[r,1])
+        xlabel[wr]=paste(txl[r,1],1:txl[r,2],sep=".")
+      }
+    }
+  if (is.data.frame(x)){
+    resumen=NULL
+    for (j in 1:ncol(x)){
+      rj=desc(x=x[,j],by=by,xlabel=xlabel[j],bylabel=bylabel, plot=plot,showDescriptives = FALSE)
+      names(rj)[1]="Variable"
+      if (!is.null(by)) names(rj)[5]="P"
+      resumen=rbind(resumen,rj)
+    }
+    if (showDescriptives) pander(resumen,split.table=90)
+  } else{
+    resumen=desc(x,by=by,xlabel=xlabel,bylabel=bylabel, plot=plot,
+                 report=report, showDescriptives=showDescriptives)
+  }
+  return(invisible(resumen))
 }

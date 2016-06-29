@@ -4,7 +4,7 @@
 \alias{describe}
 \title{Univariate summary of a variable for each level of a factor variable (if any is specified)}
 \usage{
-describe(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = TRUE,
+describe(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = FALSE,
   report = "auto", showDescriptives = TRUE)
 }
 \arguments{

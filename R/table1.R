@@ -25,8 +25,12 @@ density=TRUE, showTable=TRUE){
   n=table(x)
   pct=prop.table(n)
   tbl=data.frame(rownames(n),sprintf("%4.0f (%.2f)", n, 100*pct))
-  names(tbl)=c(xlabel,"n(%)")
-  if (showTable) pander(tbl)
+  tbl[[1]]=as.character(tbl[[1]])
+  levels(tbl[[2]])=c(levels(tbl[[2]]),"")
+  tbl=rbind(c(xlabel,""),tbl)
+  ad=paste("All data\n(n=",sum(n),")",sep="")
+  names(tbl)=c("Variable \n(levels)",ad)
+  if(showTable) pander(tbl, caption="Data are summarized in absolute frequencies and percentage, n(%)")
   if (plot){
     freqTable=data.frame(value=rownames(n),cbind(n,pct))
     levels(freqTable$value) <- gsub(" ", "\n", levels(freqTable$value))
@@ -53,12 +57,8 @@ density=TRUE, showTable=TRUE){
     print(gr)
   }
   # formatting table for invisible returning
-  tbl[[1]]=as.character(tbl[[1]])
-  levels(tbl[[2]])=c(levels(tbl[[2]]),"")
-  tbl=rbind(c(xlabel,""),tbl)
   xwidth=max(nchar(tbl[[1]]))+5
   tbl[1,1]=str_pad(tbl[1,1],xwidth,"right")
   tbl[-1,1]=str_pad(tbl[-1,1],xwidth,"left")
-  names(tbl)[1]=""
   return(invisible(tbl))
 }

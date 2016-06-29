@@ -21,7 +21,7 @@ meansd=function(x) sprintf("%1.2f (%1.2f)", mean(x,na.rm=TRUE), sd(x,na.rm=TRUE)
 # Returns median and ptiles
 # -------------------------------------
 medianPtiles=function(x, ptiles) {
-  sprintf("%1.1f (%1.1f;%1.1f)", median(x,na.rm=TRUE),
+  sprintf("%1.1f (%1.1f; %1.1f)", median(x,na.rm=TRUE),
           quantile(x,na.rm=TRUE,probs=ptiles[1]),
           quantile(x,na.rm=TRUE,probs=ptiles[2]))
 }
