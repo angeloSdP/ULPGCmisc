@@ -46,17 +46,25 @@ describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
       }
     }
   if (is.data.frame(x)){
+    nnas=apply(x,2,function(x) length(na.omit(x)))
+    equal.SampleSize=all(nnas==nnas[1])
     resumen=NULL
     for (j in 1:ncol(x)){
       rj=desc(x=x[,j],by=by,xlabel=xlabel[j],bylabel=bylabel, plot=plot,showDescriptives = FALSE)
       names(rj)[1]="Variable"
+      if (!equal.SampleSize&!is.null(by))
+        names(rj)[2:4]=sapply(strsplit(names(rj)[2:4],"\n"), function(x) x[1])
+      if (!equal.SampleSize&is.null(by))
+        names(rj)[2]=strsplit(names(rj)[2],"\n")[[1]][1]
       if (!is.null(by)) names(rj)[5]="P"
       resumen=rbind(resumen,rj)
     }
-    if (showDescriptives) pander(resumen,split.table=90)
+    if (showDescriptives) pander(resumen,split.table=Inf)
   } else{
     resumen=desc(x,by=by,xlabel=xlabel,bylabel=bylabel, plot=plot,
                  report=report, showDescriptives=showDescriptives)
   }
+  if(!equal.SampleSize) warning("Missing values are present. Not all the variables are evaluated on the same sample size.\nResults must be taken with care.",
+                                call.=FALSE)
   return(invisible(resumen))
 }
