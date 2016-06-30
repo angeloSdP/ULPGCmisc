@@ -32,12 +32,14 @@ describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('table.style',"multiline")
-  if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
+  dsby=deparse(substitute(by))
+  if ((dsby!="NULL")& is.null(by)) stop(paste("Variable",dsby,"not found"))
+  if (!is.null(by)&is.null(bylabel)) bylabel=toLabel(dsby)
   if (is.null(xlabel)){
     if (is.data.frame(x)) xlabel=names(x) else
         xlabel=toLabel(deparse(substitute(x)))
   } else
-    if (is.data.frame(x)&!is.null(xlabel)&length(unique(xlabel))<ncol(x)){
+    if (is.data.frame(x)&!is.null(xlabel)&length(unique(xlabel))<NCOL(x)){
       txl=data.frame(table(xlabel))
       reps=which(txl$Freq>1)
       for (r in reps){
@@ -46,25 +48,28 @@ describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
       }
     }
   if (is.data.frame(x)){
-    nnas=apply(x,2,function(x) length(na.omit(x)))
-    equal.SampleSize=all(nnas==nnas[1])
+    vv=validValues(x, by=by, byname=toLabel(dsby))
+    NApresent=vv$haveNA
     resumen=NULL
     for (j in 1:ncol(x)){
       rj=desc(x=x[,j],by=by,xlabel=xlabel[j],bylabel=bylabel, plot=plot,showDescriptives = FALSE)
       names(rj)[1]="Variable"
-      if (!equal.SampleSize&!is.null(by))
-        names(rj)[2:4]=sapply(strsplit(names(rj)[2:4],"\n"), function(x) x[1])
-      if (!equal.SampleSize&is.null(by))
-        names(rj)[2]=strsplit(names(rj)[2],"\n")[[1]][1]
+      if (NApresent){
+        if (is.null(by)) names(rj)[2]=strsplit(names(rj)[2],"\n")[[1]][1]
+        else names(rj)[2:4]=sapply(strsplit(names(rj)[2:4],"\n"), function(x) x[1])
+      }
       if (!is.null(by)) names(rj)[5]="P"
       resumen=rbind(resumen,rj)
     }
     if (showDescriptives) pander(resumen,split.table=Inf)
+    if(NApresent){
+      warning("Missing values are present. Not all the variables are evaluated on the same sample size.\nResults must be taken with care.",
+                                  call.=FALSE)
+      return(invisible(list(summary=resumen, nValid=vv$nValid)))
+    } else return(invisible(list(summary=resumen)))
   } else{
     resumen=desc(x,by=by,xlabel=xlabel,bylabel=bylabel, plot=plot,
                  report=report, showDescriptives=showDescriptives)
+    return(invisible(list(summary=resumen)))
   }
-  if(!equal.SampleSize) warning("Missing values are present. Not all the variables are evaluated on the same sample size.\nResults must be taken with care.",
-                                call.=FALSE)
-  return(invisible(resumen))
 }

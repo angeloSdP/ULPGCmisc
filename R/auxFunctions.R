@@ -58,3 +58,36 @@ toLabel=function(varname){
   }
   varname
 }
+# ----------------------------------------
+# Count the number of valid values
+# ----------------------------------------
+validValues=function(x, by=NULL, byname=NULL){
+  vv=function(x,by=NULL){
+    nvalid=length(na.omit(x))
+    if (!is.null(by)){
+      byValid=tapply(x,by,function(x) length(na.omit(x)))
+      nvalid=c(nvalid,byValid)
+    }
+    nvalid
+  }
+  if (!is.data.frame(x)) x=data.frame(x)
+  N=nrow(x)
+  nValid=apply(x,2,vv,by)
+  if (!is.null(dim(nValid))) nValid=t(nValid)
+  nValid=cbind(names(x),data.frame(nValid))
+  nmv=c("Variable",paste("All data\n(n=",N,")",sep=""))
+  if (!is.null(by)){
+    bylabel=if (is.null(byname)) toLabel(deparse(substitute(by))) else byname
+    by=factor(by)
+    nby=table(by)
+    nmv=c(nmv,paste(bylabel,"=",levels(by),"\n(n=",nby,")",sep=""))
+  }
+  names(nValid)=nmv
+  rownames(nValid)=NULL
+  if (is.null(by)) with.NA=!apply(nValid,1,function(r) all(r[2]==N))
+  else with.NA=!apply(nValid,1,function(r) all(r[2:4]==c(N,nby)))
+  nValid$with.NA=ifelse(with.NA,"*","")
+  haveNA=(sum(with.NA) > 0)
+  return(list(nValid=nValid,haveNA=haveNA))
+}
+
