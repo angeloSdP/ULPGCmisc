@@ -11,6 +11,7 @@
 # @param density Logical. if TRUE barplot is printed with relative frequencies
 # @param showTable Logical. If TRUE frequency table is printed via pander. If FALSE
 # frequency table is returned invisibly.
+# @param pctBycol Logical. If TRUE frequencies are computed by columns else by rows
 # @return an univariate frequency table with absolute and relative frequencies, and
 # optionally a barplot
 # @examples
@@ -19,7 +20,7 @@
 # table2(symptom,by=disease,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
 #
 table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printFreq=TRUE,
-                density=TRUE, showTable=TRUE){
+                density=TRUE, showTable=TRUE,pctBycol=TRUE){
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('table.style',"multiline")
@@ -31,7 +32,8 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
   tb=table(x,by)
   N=sum(tb)
   n=colSums(tb)
-  pct=prop.table(tb,2)
+  along=if (pctBycol) 2 else 1
+  pct=prop.table(tb,along)
   tbl2=data.frame(rownames(tb),array(sprintf("%4.0f (%.2f)", tb, 100*pct),dim=dim(tb)))
   #names(tbl2)=c(paste("\ ",bylabel,"\n",xlabel,"  \ "),paste(levels(by),"\n n (%)"))
   chip=tryCatch(chisq.test(tb),

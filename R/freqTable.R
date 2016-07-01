@@ -13,6 +13,7 @@
 #' @param density Logical. if TRUE barplot is printed with relative frequencies
 #' @param showTable Logical. If TRUE frequency table is printed via pander. If FALSE
 #' frequency table is returned invisibly.
+#' @param pctBycol Logical. If TRUE frequencies in crosstabs are computed by columns else by rows
 #' @return an univariate frequency table with absolute and relative frequencies, and
 #' optionally a barplot
 #' @examples
@@ -22,7 +23,7 @@
 #' freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
 #'
 freqTable=function(x,by=NULL,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE,
-                   printFreq=TRUE, density=TRUE, showTable=TRUE){
+                   printFreq=TRUE, density=TRUE, showTable=TRUE, pctBycol=TRUE){
   if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
   if (is.null(by)){
     table1(x=x,xlabel=xlabel,plot=plot,horizontal=horizontal,
@@ -30,6 +31,6 @@ freqTable=function(x,by=NULL,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE
   } else{
     if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
     table2(x=x,by=by,xlabel=xlabel,bylabel=bylabel,plot=plot,horizontal=horizontal,
-               printFreq=printFreq,density=density, showTable=showTable)
+               printFreq=printFreq,density=density, showTable=showTable,pctBycol=pctBycol)
   }
 }
