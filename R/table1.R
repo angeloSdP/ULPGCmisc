@@ -30,7 +30,7 @@ density=TRUE, showTable=TRUE){
   tbl=rbind(c(xlabel,""),tbl)
   ad=paste("All data\n(n=",sum(n),")",sep="")
   names(tbl)=c("Variable \n(levels)",ad)
-  if(showTable) pander(tbl, caption="Data are summarized in absolute frequencies and percentage, n(%)")
+  if(showTable) pander(tbl, caption="Data are summarized in absolute frequencies and percentages, n(%)")
   if (plot){
     freqTable=data.frame(value=rownames(n),cbind(n,pct))
     levels(freqTable$value) <- gsub(" ", "\n", levels(freqTable$value))

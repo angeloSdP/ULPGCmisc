@@ -2,10 +2,15 @@
 # Pretty formatting of p-values
 # -------------------------------------
 formatPval=function(pval){
-  if (is.na(pval)) NA
-  else if (pval<0.0001) "<0.0001"
-  else as.character(sprintf("%5.4f",pval))
+  formatPval=function(pval){
+    if (is.na(pval)) NA
+    else if (pval<0.0001) "<0.0001"
+    else as.character(sprintf("%5.4f",pval))
+  }
+  vfp<-Vectorize(formatPval)
+  vfp(pval)
 }
+
 # -------------------------------------
 # Returns Shapiro Test p-value or NA
 # -------------------------------------

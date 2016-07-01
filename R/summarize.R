@@ -39,9 +39,8 @@ summarize=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,
              showSummary=showSummary)
   } else{
     if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
-    if (report%in%c("auto","meansd","medianq")) fullReport=FALSE else fullReport=TRUE
     summary2(x=x,by=by,xlabel=xlabel,bylabel=bylabel, plot=plot, ptiles=ptiles, alphaNorm=alphaNorm,
-             fullReport=fullReport,histogram=histogram,boxplot=boxplot,rug=rug,faceted=faceted,
+             report=report,histogram=histogram,boxplot=boxplot,rug=rug,faceted=faceted,
              densityCurve=densityCurve,normalCurve=normalCurve,addMeanLine=addMeanLine,digits=digits,
              showSummary=showSummary)
   }

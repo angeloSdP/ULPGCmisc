@@ -49,7 +49,7 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
   nmby=paste(bylabel," = ",levels(by),"\n(n=",n,")",sep="")
   ad=paste("All data\n(n=",N,")",sep="")
   names(tbl)=c("Variable \n(levels)",ad,nmby,paste(test,"\nP"))
-  if(showTable) pander(tbl, caption="Data are summarized in absolute frequencies n(%)")
+  if(showTable) pander(tbl, caption="Data are summarized in absolute frequencies and percentages, n(%)")
   if (plot){
     levels(x) <- gsub(" ", "\n", levels(x))
     freqTable=data.frame(tb)

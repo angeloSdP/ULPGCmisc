@@ -89,17 +89,23 @@ setwd("~/gDrive/BREIMAN/DoctoradoMedicina/Tareas R/")
 library(openxlsx)
 telde <- read.xlsx("endocrino.xlsx")
 for (i in 1:ncol(telde)) if (length(unique(telde[,i]))==2) telde[,i]=factor(telde[,i])
-
 telde$DM=ordered(telde$DM,levels=c(1,0),labels=c("DM+","DM-"))
 telde$SEXO=ordered(telde$SEXO,levels=c(1,0),labels=c("Mujer","Hombre"))
+
 freqTable(telde$SEXO)
 freqTable(telde$DM,by=telde$SEXO)
-with(telde,describe(A1C, by=DM))
+with(telde,describe(A1C, by=DM, plot=TRUE))
+with(telde,describe(A1C, by=DM, report="meansd",plot=TRUE))
 describe(telde$TALLA)
 
 describe(telde[,1:10])
 
 describe(telde[,1:10],by=telde$DM)
 
+describe(telde[,10:21], by=telde$DM)
 
+dt <- describe(telde[,10:21], by=telde$DM)
+pander(dt$nValid)
 
+describe(telde)
+describe(telde, by=telde$DM)

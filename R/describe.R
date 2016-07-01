@@ -22,7 +22,7 @@
 describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
                   report="auto", showDescriptives=TRUE){
   desc=function(x,by=NULL,xlabel=xlabel,bylabel=bylabel, plot=plot,
-                    report="auto", showDescriptives=TRUE){
+                    report=report, showDescriptives=TRUE){
     if (is.factor(x)|is.character(x))
       freqTable(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
                 showTable = showDescriptives)
@@ -48,22 +48,21 @@ describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
       }
     }
   if (is.data.frame(x)){
+    if (length(report)<ncol(x)) report=rep(report[1],ncol(x))
     vv=validValues(x, by=by, byname=toLabel(dsby))
     NApresent=vv$haveNA
     resumen=NULL
+    nms=names(vv$nValid)
+    if (length(nms)==5) nms[5]="P" else if (length(nms)==3) nms=nms[-3]
+    if (NApresent) nms=sapply(strsplit(nms,"\n"), function(x) x[1])
     for (j in 1:ncol(x)){
-      rj=desc(x=x[,j],by=by,xlabel=xlabel[j],bylabel=bylabel, plot=plot,showDescriptives = FALSE)
-      names(rj)[1]="Variable"
-      if (NApresent){
-        if (is.null(by)) names(rj)[2]=strsplit(names(rj)[2],"\n")[[1]][1]
-        else names(rj)[2:4]=sapply(strsplit(names(rj)[2:4],"\n"), function(x) x[1])
-      }
-      if (!is.null(by)) names(rj)[5]="P"
-      resumen=rbind(resumen,rj)
+      rj=desc(x=x[,j],by=by,xlabel=xlabel[j],bylabel=bylabel, plot=plot,
+              report=report[j],showDescriptives = FALSE)
+      resumen=rbind(resumen,setNames(rj,nms))
     }
     if (showDescriptives) pander(resumen,split.table=Inf)
     if(NApresent){
-      warning("Missing values are present. Not all the variables are evaluated on the same sample size.\nResults must be taken with care.",
+      warning("Missing values are present. Not all the variables are evaluated on the same sample size.",
                                   call.=FALSE)
       return(invisible(list(summary=resumen, nValid=vv$nValid)))
     } else return(invisible(list(summary=resumen)))

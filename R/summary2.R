@@ -24,9 +24,10 @@
 # @return
 #
 summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
-                  fullReport=FALSE,boxplot=TRUE,histogram=TRUE, rug=TRUE,faceted=TRUE,
+                  report="auto",boxplot=TRUE,histogram=TRUE, rug=TRUE,faceted=TRUE,
                   densityCurve=TRUE, normalCurve=FALSE, addMeanLine=TRUE,digits=2,
                   showSummary=TRUE){
+  fullReport= (!substr(report,1,3)%in%c("aut","mea","med"))
   if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
   if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
   if (is.numeric(by)&length(unique(by))>8){
@@ -42,7 +43,10 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
   if (any(is.na(shapiro_pvs))) shapiro_pvs[is.na(shapiro_pvs)]=1
   normal=all(shapiro_pvs>=alphaNorm)
   nl=length(levels(by))
-  if (normal){
+  if (report=="meansd") testNormal=TRUE
+  else if (report=="medianq") testNormal=FALSE
+  else testNormal=normal
+  if (testNormal){
     msd=meansd(x)
     rsname="mean (sd)"
     resum1=tapply(x, by, meansd)
@@ -53,6 +57,13 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
     } else if (nl>2){
       pval=tryCatch(formatPval(anova(lm(x~by))$"Pr(>F)"[1]), error=function(e) "NaN")
       test="anova F-test"
+    }
+    if (!normal){
+      fpv= formatPval(shapiro_pvs)
+      fpv=paste(sprintf("%s (%s)",fpv,names(fpv)),collapse=", ")
+      warning(paste("Variable is not normally distributed (Shapiro test P-values: ",
+                    fpv,").", sep=""),
+              call.=FALSE)
     }
   }
   else{
@@ -67,6 +78,13 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
     else if (nl>2){
       pval=tryCatch(formatPval(kruskal.test(x~by)$p.value), error=function(e) "NaN")
       test="Kruskal test"
+    }
+    if (normal){
+      fpv= formatPval(shapiro_pvs)
+      fpv=paste(sprintf("%s (%s)",fpv,names(fpv)),collapse=", ")
+      warning(paste("Variable is not normally distributed in the groups \n(Shapiro test P-values: ",
+                    fpv,").", sep=""),
+              call.=FALSE)
     }
   }
   if (!fullReport){

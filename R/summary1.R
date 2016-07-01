@@ -37,7 +37,7 @@ summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
     if (!normal)
       warning(paste("Variable is not normally distributed (Shapiro test P",
                     formatPval(shpv),
-                    "). \n Maybe description with mean and sd can be not adequate.", sep=""),
+                    ").", sep=""),
               call.=FALSE)
   }
   if (report=="auto"){
