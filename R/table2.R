@@ -41,13 +41,13 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
                 })
   if (substr(chip$method,1,6)=="Fisher") test="Fisher exact test" else test="Chi-Squared test"
   pv=chip$p.value
-  wsp=rep("",nrow(tbl2)-1)
-  tbl2=cbind(tbl2,P=c(wsp,formatPval(pv)))
   tbl1=table1(x[!is.na(by)],xlabel,plot=FALSE,showTable=FALSE)
   for (j in 2:ncol(tbl2)) levels(tbl2[,j])=c(levels(tbl2[,j]),"")
   tbl=cbind(tbl1,rbind(rep("",ncol(tbl2)-1),tbl2[,-1]))
   nmby=paste(bylabel," = ",levels(by),"\n(n=",n,")",sep="")
   ad=paste("All data\n(n=",N,")",sep="")
+  wsp=rep("",nrow(tbl2))
+  tbl=cbind(tbl,P=c(formatPval(pv),wsp))
   names(tbl)=c("Variable \n(levels)",ad,nmby,paste(test,"\nP"))
   if(showTable) pander(tbl, caption="Data are summarized in absolute frequencies and percentages, n(%)")
   if (plot){
