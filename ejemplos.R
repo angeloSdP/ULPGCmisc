@@ -100,7 +100,7 @@ describe(telde$TALLA, by=telde$HTA_OMS,plot=TRUE)
 
 describe(telde[,1:10])
 
-describe(telde[,1:10],by=telde$DM)
+describe(telde[,1:10],by=telde$DM, pctBycol = FALSE)
 
 describe(telde[,10:21], by=telde$DM)
 

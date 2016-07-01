@@ -12,7 +12,7 @@
 #' @param bylabel Label of the variable by, to be used in figures and tables.
 #' @param xlabel Label of the variable x, to be used in figures and tables.
 #' @param plot Logical. If TRUE a plot is printed
-#' @param pctBycol Logical. If TRUE frequencies in crosstabs are computed by columns else by rows.
+#' @param pctBycol Logical. If TRUE, relative frequencies in crosstabs are computed by columns else by rows.
 #' @param report. If "auto" a Shapiro test is made; only mean and sd (if variable can be assumed to be
 # normal) or median and quartiles (when variable is not normal) are shown. If "meansd", only mean and sd
 # are shown; if "medianq", median and percentiles are shown. In other case a full report is printed,

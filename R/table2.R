@@ -11,7 +11,7 @@
 # @param density Logical. if TRUE barplot is printed with relative frequencies
 # @param showTable Logical. If TRUE frequency table is printed via pander. If FALSE
 # frequency table is returned invisibly.
-# @param pctBycol Logical. If TRUE frequencies are computed by columns else by rows
+# @param pctBycol Logical. If TRUE relative frequencies are computed by columns else by rows
 # @return an univariate frequency table with absolute and relative frequencies, and
 # optionally a barplot
 # @examples

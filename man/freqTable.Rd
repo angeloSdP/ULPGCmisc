@@ -28,7 +28,8 @@ freqTable(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = TRUE,
 \item{showTable}{Logical. If TRUE frequency table is printed via pander. If FALSE
 frequency table is returned invisibly.}
 
-\item{pctBycol}{Logical. If TRUE frequencies in crosstabs are computed by columns else by rows}
+\item{pctBycol}{Logical. If TRUE relative frequencies in crosstabs are computed
+by columns else by rows}
 }
 \value{
 an univariate frequency table with absolute and relative frequencies, and

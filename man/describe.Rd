@@ -18,7 +18,7 @@ describe(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = FALSE,
 
 \item{plot}{Logical. If TRUE a plot is printed}
 
-\item{pctBycol}{Logical. If TRUE frequencies in crosstabs are computed by columns else by rows.}
+\item{pctBycol}{Logical. If TRUE, relative frequencies in crosstabs are computed by columns else by rows.}
 
 \item{report.}{If "auto" a Shapiro test is made; only mean and sd (if variable can be assumed to be}
 }
