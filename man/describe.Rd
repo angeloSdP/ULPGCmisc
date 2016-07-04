@@ -5,7 +5,7 @@
 \title{Univariate summary of a variable for each level of a factor variable (if any is specified)}
 \usage{
 describe(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = FALSE,
-  report = "auto", showDescriptives = TRUE)
+  report = "auto", showDescriptives = TRUE, pctBycol = TRUE)
 }
 \arguments{
 \item{x}{variable to be summarized.}
@@ -17,6 +17,8 @@ describe(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = FALSE,
 \item{bylabel}{Label of the variable by, to be used in figures and tables.}
 
 \item{plot}{Logical. If TRUE a plot is printed}
+
+\item{pctBycol}{Logical. If TRUE, relative frequencies in crosstabs are computed by columns else by rows.}
 
 \item{report.}{If "auto" a Shapiro test is made; only mean and sd (if variable can be assumed to be}
 }

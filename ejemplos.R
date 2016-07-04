@@ -96,11 +96,11 @@ freqTable(telde$SEXO)
 freqTable(telde$DM,by=telde$SEXO)
 with(telde,describe(A1C, by=DM, plot=TRUE))
 with(telde,describe(A1C, by=DM, report="meansd",plot=TRUE))
-describe(telde$TALLA)
+describe(telde$TALLA, by=telde$HTA_OMS,plot=TRUE)
 
 describe(telde[,1:10])
 
-describe(telde[,1:10],by=telde$DM)
+describe(telde[,1:10],by=telde$DM, pctBycol = FALSE)
 
 describe(telde[,10:21], by=telde$DM)
 
