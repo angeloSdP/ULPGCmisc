@@ -85,7 +85,7 @@ plotSummary2 <- function(x,by,xlabel=NULL,bylabel=NULL,boxplot=TRUE,histogram=TR
       gr<-grid.arrange(plots[[1]],plots[[2]],widths=c(4), heights=c(3.5, 1.5))
     }
   } else if (boxplot&!(histogram|densityCurve|normalCurve)) gr<- bp
-  plot(gr)
+  gr
 }
 
 
