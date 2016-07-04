@@ -108,4 +108,5 @@ dt <- describe(telde[,10:21], by=telde$DM)
 pander(dt$nValid)
 
 describe(telde)
-describe(telde, by=telde$DM)
+dt<-describe(telde, by=telde$DM)
+pander(dt$nValid)
