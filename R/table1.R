@@ -53,6 +53,7 @@ density=TRUE, showTable=TRUE){
       else gr=gr+geom_text(aes(label=n, y=n+ldist*max(n)), size=4)
     }
     print(gr)
+    pandoc.p("")
   }
   # formatting table for invisible returning
   xwidth=max(nchar(tbl[[1]]))+5

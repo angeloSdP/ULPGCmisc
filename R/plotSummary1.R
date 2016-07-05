@@ -42,4 +42,5 @@ plotSummary1 <- function(x,xlabel=NULL,histogram=TRUE,boxplot=TRUE,
     gr <- grid.arrange(gp1, gp2, ncol=1, nrow=2, widths=c(4), heights=c(4.5, 0.75))
   } else if (boxplot) gr <- bp
   gr
+  pandoc.p("")
 }

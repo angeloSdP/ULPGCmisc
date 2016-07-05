@@ -93,6 +93,7 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
                               textGrob(bylabel, rot = -90, gp = gpar(col = gray(0)))),
                          t, l, b, name = paste(runif(2)))
     plot(z)
+    pandoc.p("")
   }
   return(invisible(tbl))
 }

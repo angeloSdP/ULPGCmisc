@@ -86,6 +86,7 @@ plotSummary2 <- function(x,by,xlabel=NULL,bylabel=NULL,boxplot=TRUE,histogram=TR
     }
   } else if (boxplot&!(histogram|densityCurve|normalCurve)) gr<- bp
   gr
+  pandoc.p("")
 }
 
 
