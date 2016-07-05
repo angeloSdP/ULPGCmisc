@@ -38,13 +38,11 @@ density=TRUE, showTable=TRUE){
     if (density) {
       gr=ggplot(freqTable, aes(x=value, y=pct, fill=value)) +
         geom_bar(stat="identity") +
-        scale_y_continuous(labels=percent,limits=c(0,1.1*max(pct)))+
-        scale_x_discrete(limits=levels(x))
+        scale_y_continuous(labels=percent,limits=c(0,1.1*max(pct)))
     } else{
       gr=ggplot(freqTable, aes(x=value, y=n, fill=value)) +
         geom_bar(stat="identity") +
-        scale_y_continuous(limits=c(0,1.1*max(n)))+
-        scale_x_discrete(limits=levels(x))
+        scale_y_continuous(limits=c(0,1.1*max(n)))
     }
     gr= gr + xlab(xlabel) + ylab("Frequency") + ggtitle(xlabel) +
       guides(fill=FALSE)
