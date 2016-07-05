@@ -74,9 +74,10 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
       guides(fill=FALSE)
     if (horizontal) gr=gr+coord_flip()
     if (printFreq){
+      if (length(levels(x))>5) tsz=3 else tsz=4
       if (density) gr=gr+geom_text(aes(label=paste0(round(pct*100,1),"%"),
-                                       y=pct+ldist*max(pct)), size=4)
-      else gr=gr+geom_text(aes(label=n, y=n+ldist*max(n)), size=4)
+                                       y=pct+ldist*max(pct)), size=tsz)
+      else gr=gr+geom_text(aes(label=n, y=n+ldist*max(n)), size=tsz)
     }
     z <- ggplotGrob(gr)
     require(grid)
