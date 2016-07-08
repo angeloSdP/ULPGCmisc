@@ -20,7 +20,7 @@
 # table2(symptom,by=disease,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
 #
 table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printFreq=TRUE,
-                density=TRUE, showTable=TRUE,pctBycol=TRUE){
+                density=TRUE, showTable=TRUE,pctBycol=TRUE, title=""){
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('table.style',"multiline")
@@ -70,7 +70,7 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
         geom_bar(stat="identity") + facet_grid(by ~ .) +
         scale_y_continuous(limits=c(0,1.15*max(freqTable$n)))
     }
-    gr= gr + xlab(xlabel) + ylab("Frequency") + ggtitle(paste(xlabel,"by",bylabel)) +
+    gr= gr + xlab(xlabel) + ylab("Frequency") + ggtitle(title) +
       guides(fill=FALSE)
     if (horizontal) gr=gr+coord_flip()
     if (printFreq){

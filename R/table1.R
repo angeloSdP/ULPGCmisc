@@ -16,7 +16,7 @@
 # table1(letters,xlabel="letters in a text",horizontal=TRUE,density=TRUE,printFreq=FALSE, showTable=TRUE)
 #
 table1=function(x,xlabel=NULL,plot=TRUE,horizontal=FALSE, printFreq=TRUE,
-density=TRUE, showTable=TRUE){
+density=TRUE, showTable=TRUE, title=""){
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('table.style',"multiline")
@@ -44,7 +44,7 @@ density=TRUE, showTable=TRUE){
         geom_bar(stat="identity") +
         scale_y_continuous(limits=c(0,1.1*max(n)))
     }
-    gr= gr + xlab(xlabel) + ylab("Frequency") + ggtitle(xlabel) +
+    gr= gr + xlab(xlabel) + ylab("Frequency") + ggtitle(title) +
       guides(fill=FALSE)
     if (horizontal) gr=gr+coord_flip()
     if (printFreq){

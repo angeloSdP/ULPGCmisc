@@ -21,12 +21,12 @@
 #' @return
 #'
 describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
-                  report="auto", showDescriptives=TRUE,pctBycol=TRUE){
+                  report="auto", showDescriptives=TRUE,pctBycol=TRUE, title=""){
   desc=function(x,by=NULL,xlabel=xlabel,bylabel=bylabel, plot=plot,
                     report=report, showDescriptives=TRUE){
     if (is.factor(x)|is.character(x))
       freqTable(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
-                showTable = showDescriptives, pctBycol=pctBycol)
+                showTable = showDescriptives, pctBycol=pctBycol, title=title)
     else summarize(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
                    report=report,showSummary=showDescriptives)
   }
