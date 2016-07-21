@@ -32,7 +32,8 @@ density=TRUE, showTable=TRUE, title=""){
   names(tbl)=c("Variable \n(levels)",ad)
   if(showTable) pander(tbl, caption="Data are summarized in absolute frequencies and percentages, n(%)")
   if (plot){
-    freqTable=data.frame(value=rownames(n),cbind(n,pct))
+    freqTable=cbind(as.data.frame(n),as.data.frame(pct))[,-3]
+    names(freqTable)=c("value","n","pct")
     levels(freqTable$value) <- gsub(" ", "\n", levels(freqTable$value))
     ldist=if (horizontal) 0.045 else 0.035
     if (density) {
