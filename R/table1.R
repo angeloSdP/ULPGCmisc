@@ -30,7 +30,14 @@ density=TRUE, showTable=TRUE, title=""){
   tbl=rbind(c(xlabel,""),tbl)
   ad=paste("All data\n(n=",sum(n),")",sep="")
   names(tbl)=c("Variable \n(levels)",ad)
-  if(showTable) pander(tbl, caption="Data are summarized in absolute frequencies and percentages, n(%)")
+  if(showTable) {
+    #xwidth=max(nchar(tbl[[1]]))+8
+    #addpad=xwidth-nchar(tbl[-1,1])
+    #sp=sapply(addpad,function(n) paste(rep("&nbsp;",n),collapse=""))
+    #tbl[-1,1]=paste(sp,tbl[-1,1])
+    pander(tbl,justify=c("left","right"),split.table=Inf,
+           caption="Data are summarized in absolute frequencies and percentages, n(%)")
+  }
   if (plot){
     freqTable=cbind(as.data.frame(n),as.data.frame(pct))[,-3]
     names(freqTable)=c("value","n","pct")
@@ -60,6 +67,6 @@ density=TRUE, showTable=TRUE, title=""){
   # formatting table for invisible returning
   xwidth=max(nchar(tbl[[1]]))+5
   tbl[1,1]=str_pad(tbl[1,1],xwidth,"right")
-  tbl[-1,1]=str_pad(tbl[-1,1],xwidth,"left")
+  tbl[-1,1]=paste("&zwnj;",str_pad(tbl[-1,1],xwidth,"left"))
   return(invisible(tbl))
 }
