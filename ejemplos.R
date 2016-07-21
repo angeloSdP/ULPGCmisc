@@ -6,7 +6,8 @@ symptom=sample(LETTERS[1:4],120,replace=TRUE)
 disease=sample(c("Yes","No"),120,replace=TRUE)
 
 freqTable(symptom,by=disease,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=TRUE)
-freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
+freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE,
+          title="Frecuencia de aparición de los distintos síntomas")
 
 x=rnorm(500,10,2)
 summarize(x)
