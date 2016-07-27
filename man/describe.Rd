@@ -5,7 +5,8 @@
 \title{Univariate summary of a variable for each level of a factor variable (if any is specified)}
 \usage{
 describe(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = FALSE,
-  report = "auto", showDescriptives = TRUE, pctBycol = TRUE, title = "")
+  report = "auto", showDescriptives = TRUE, pctBycol = TRUE, title = "",
+  digits = 2)
 }
 \arguments{
 \item{x}{variable to be summarized.}

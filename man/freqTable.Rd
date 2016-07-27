@@ -6,7 +6,7 @@
 \usage{
 freqTable(x, by = NULL, xlabel = NULL, bylabel = NULL, plot = TRUE,
   horizontal = FALSE, printFreq = TRUE, density = TRUE,
-  showTable = TRUE, pctBycol = TRUE, title = "")
+  showTable = TRUE, pctBycol = TRUE, title = "", digits = 2)
 }
 \arguments{
 \item{x}{variable to tabulate, which can be interpreted as factor}

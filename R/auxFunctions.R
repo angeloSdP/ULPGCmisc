@@ -21,12 +21,16 @@ shap_pval=function(x){
 # -------------------------------------
 # Returns mean and sd
 # -------------------------------------
-meansd=function(x) sprintf("%1.2f (%1.2f)", mean(x,na.rm=TRUE), sd(x,na.rm=TRUE))
+meansd=function(x,digits=2){
+  formato=paste("%1.",digits,"f (%1.",digits,"f)",sep="")
+  sprintf(formato, mean(x,na.rm=TRUE), sd(x,na.rm=TRUE))
+}
 # -------------------------------------
 # Returns median and ptiles
 # -------------------------------------
-medianPtiles=function(x, ptiles) {
-  sprintf("%1.1f (%1.1f; %1.1f)", median(x,na.rm=TRUE),
+medianPtiles=function(x, ptiles,digits=1) {
+  formato=paste("%1.",digits,"f (%1.",digits,"f; %1.",digits,"f)",sep="")
+  sprintf(formato, median(x,na.rm=TRUE),
           quantile(x,na.rm=TRUE,probs=ptiles[1]),
           quantile(x,na.rm=TRUE,probs=ptiles[2]))
 }
@@ -95,4 +99,7 @@ validValues=function(x, by=NULL, byname=NULL){
   haveNA=(sum(with.NA) > 0)
   return(list(nValid=nValid,haveNA=haveNA))
 }
-
+# ----------------------------------------
+# Formatting
+# ----------------------------------------
+spf=function(x,format) sprintf(format,x)

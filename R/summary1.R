@@ -24,10 +24,10 @@
 #
 summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
                   report="auto",histogram=TRUE,boxplot=TRUE,rug=TRUE,
-                  densityCurve=TRUE,normalCurve=FALSE,addMeanLine=TRUE,showSummary=TRUE){
+                  densityCurve=TRUE,normalCurve=FALSE,addMeanLine=TRUE,showSummary=TRUE,
+                  digits=2){
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
-  panderOptions('digits',4)
   if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
   x=na.omit(x)
   n=length(which(!is.na(x)))
@@ -47,13 +47,13 @@ summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
   }
   if (report=="meansd"){
     rsname="mean (sd)"
-    resumen=data.frame(xlabel, meansd(x))
+    resumen=data.frame(xlabel, meansd(x,digits))
     names(resumen)=c("Variable",paste("All data\n(n=",n,")",sep=""))
     if (showSummary) pander(resumen, caption=paste("Data are summarized as",rsname),
                             keep.line.breaks=TRUE)
   } else if (report=="medianq"){
     rsname=paste("median (",paste(paste("q",100*ptiles,sep=""),collapse="-"),")",sep="")
-    resumen=data.frame(xlabel,medianPtiles(x,ptiles))
+    resumen=data.frame(xlabel,medianPtiles(x,ptiles,digits))
     names(resumen)=c("Variable",paste("All data\n(n=",n,")",sep=""))
     if (showSummary) pander(resumen, caption=paste("Data are summarized as",rsname),
                             keep.line.breaks=TRUE)
@@ -61,7 +61,13 @@ summary1=function(x,xlabel=NULL, plot=TRUE, ptiles=c(0.25,0.75), alphaNorm=0.05,
     resumen=univariateReport(x,xlabel)
     shpv=shap_pval(x)
     resumen$shapiro.test.Pvalue=formatPval(shpv)
-    if (showSummary) pander(resumen,split.table=90)
+    if (showSummary){
+      format=paste("%1.",digits,"f",sep="")
+      presumen=data.frame(resumen[,1:3],t(apply(resumen[,-c(1:3,ncol(resumen))],2,spf,format)),
+                          resumen[,ncol(resumen)])
+      names(presumen)=names(resumen)
+      pander(presumen,split.table=90)
+    }
   }
   if (plot&n>0)
     plotSummary1(x,xlabel,histogram,boxplot,rug,densityCurve,normalCurve,addMeanLine)

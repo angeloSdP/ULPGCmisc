@@ -20,7 +20,7 @@
 # table2(symptom,by=disease,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
 #
 table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printFreq=TRUE,
-                density=TRUE, showTable=TRUE,pctBycol=TRUE, title=""){
+                density=TRUE, showTable=TRUE,pctBycol=TRUE, title="",digits=2){
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('table.style',"multiline")
@@ -34,7 +34,7 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
   n=colSums(tb)
   along=if (pctBycol) 2 else 1
   pct=prop.table(tb,along)
-  tbl2=data.frame(rownames(tb),array(sprintf("%4.0f (%.2f)", tb, 100*pct),dim=dim(tb)))
+  tbl2=data.frame(rownames(tb),array(sprintf(paste("%4.0f (%.",digits,"f)",sep=""), tb, 100*pct),dim=dim(tb)))
   #names(tbl2)=c(paste("\ ",bylabel,"\n",xlabel,"  \ "),paste(levels(by),"\n n (%)"))
   chip=tryCatch(chisq.test(tb),
                 warning=function(e){
@@ -43,7 +43,7 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
                 })
   if (substr(chip$method,1,6)=="Fisher") test="Fisher exact test" else test="Chi-Squared test"
   pv=chip$p.value
-  tbl1=table1(x[!is.na(by)],xlabel,plot=FALSE,showTable=FALSE)
+  tbl1=table1(x[!is.na(by)],xlabel,plot=FALSE,showTable=FALSE, digits=digits)
   for (j in 2:ncol(tbl2)) levels(tbl2[,j])=c(levels(tbl2[,j]),"")
   tbl=cbind(tbl1,rbind(rep("",ncol(tbl2)-1),tbl2[,-1]))
   nmby=paste(bylabel," = ",levels(by),"\n(n=",n,")",sep="")

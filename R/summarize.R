@@ -36,7 +36,7 @@ summarize=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,
     summary1(x=x,xlabel=xlabel, plot=plot, ptiles=ptiles, alphaNorm=alphaNorm,
              report=report,histogram=histogram,boxplot=boxplot,rug=rug,
              densityCurve=densityCurve,normalCurve=normalCurve,addMeanLine=addMeanLine,
-             showSummary=showSummary)
+             showSummary=showSummary,digits=digits)
   } else{
     if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
     summary2(x=x,by=by,xlabel=xlabel,bylabel=bylabel, plot=plot, ptiles=ptiles, alphaNorm=alphaNorm,

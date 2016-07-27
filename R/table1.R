@@ -16,7 +16,7 @@
 # table1(letters,xlabel="letters in a text",horizontal=TRUE,density=TRUE,printFreq=FALSE, showTable=TRUE)
 #
 table1=function(x,xlabel=NULL,plot=TRUE,horizontal=FALSE, printFreq=TRUE,
-density=TRUE, showTable=TRUE, title=""){
+                density=TRUE, showTable=TRUE, title="",digits=2){
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
   panderOptions('table.style',"multiline")
@@ -24,7 +24,7 @@ density=TRUE, showTable=TRUE, title=""){
   if (!is.factor(x)) x=factor(x)
   n=table(x)
   pct=prop.table(n)
-  tbl=data.frame(rownames(n),sprintf("%4.0f (%.2f)", n, 100*pct))
+  tbl=data.frame(rownames(n),sprintf(paste("%4.0f (%.",digits,"f)",sep=""), n, 100*pct))
   tbl[[1]]=as.character(tbl[[1]])
   levels(tbl[[2]])=c(levels(tbl[[2]]),"")
   tbl=rbind(c(xlabel,""),tbl)

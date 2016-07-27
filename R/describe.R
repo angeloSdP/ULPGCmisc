@@ -21,14 +21,14 @@
 #' @return
 #'
 describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
-                  report="auto", showDescriptives=TRUE,pctBycol=TRUE, title=""){
+                  report="auto", showDescriptives=TRUE,pctBycol=TRUE, title="", digits=2){
   desc=function(x,by=NULL,xlabel=xlabel,bylabel=bylabel, plot=plot,
-                    report=report, showDescriptives=TRUE){
+                    report=report, showDescriptives=TRUE,digits=digits){
     if (is.factor(x)|is.character(x))
       freqTable(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
-                showTable = showDescriptives, pctBycol=pctBycol, title=title)
+                showTable = showDescriptives, pctBycol=pctBycol, title=title, digits=digits)
     else summarize(x=x,by=by, xlabel=xlabel,bylabel=bylabel,plot=plot,
-                   report=report,showSummary=showDescriptives)
+                   report=report,showSummary=showDescriptives,digits=digits)
   }
   panderOptions('knitr.auto.asis', FALSE)
   panderOptions('keep.line.breaks', TRUE)
@@ -58,7 +58,7 @@ describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
     if (NApresent) nms=sapply(strsplit(nms,"\n"), function(x) x[1])
     for (j in 1:ncol(x)){
       rj=desc(x=x[,j],by=by,xlabel=xlabel[j],bylabel=bylabel, plot=plot,
-              report=report[j],showDescriptives = FALSE)
+              report=report[j],showDescriptives = FALSE,digits=digits)
       resumen=rbind(resumen,setNames(rj,nms))
     }
     if (showDescriptives) pander(resumen,split.table=Inf)
@@ -69,7 +69,7 @@ describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
     } else return(invisible(list(summary=resumen)))
   } else{
     resumen=desc(x,by=by,xlabel=xlabel,bylabel=bylabel, plot=plot,
-                 report=report, showDescriptives=showDescriptives)
+                 report=report, showDescriptives=showDescriptives,digits=digits)
     return(invisible(list(summary=resumen)))
   }
 }

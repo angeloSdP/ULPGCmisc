@@ -27,6 +27,8 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
                   report="auto",boxplot=TRUE,histogram=TRUE, rug=TRUE,faceted=TRUE,
                   densityCurve=TRUE, normalCurve=FALSE, addMeanLine=TRUE,digits=2,
                   showSummary=TRUE){
+  panderOptions('knitr.auto.asis', FALSE)
+  panderOptions('keep.line.breaks', TRUE)
   fullReport= (!substr(report,1,3)%in%c("aut","mea","med"))
   if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
   if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
@@ -47,9 +49,9 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
   else if (report=="medianq") testNormal=FALSE
   else testNormal=normal
   if (testNormal){
-    msd=meansd(x)
+    msd=meansd(x,digits)
     rsname="mean (sd)"
-    resum1=tapply(x, by, meansd)
+    resum1=tapply(x, by, meansd, digits)
     if (nl<2) pval=""
     else if (nl==2){
       pval=tryCatch(formatPval(t.test(x~by)$p.value), error=function(e) "NaN")
@@ -67,9 +69,9 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
     }
   }
   else{
-    msd=medianPtiles(x,ptiles)
+    msd=medianPtiles(x,ptiles,digits)
     rsname=paste("median (",paste(paste("q",100*ptiles,sep=""),collapse="-"),")",sep="")
-    resum1=tapply(x,by,medianPtiles,ptiles)
+    resum1=tapply(x,by,medianPtiles,ptiles,digits)
     if (nl<2) pval=""
     else if (nl==2){
       pval=tryCatch(formatPval(wilcox.test(x~by)$p.value), error=function(e) "NaN")
@@ -104,7 +106,11 @@ summary2=function(x,by,xlabel=NULL,bylabel=NULL, plot=TRUE, ptiles=c(0.25,0.75),
     pw=rep("",nrow(resumen)-1)
     resumen=cbind(Variable=c(xlabel,pw),resumen,P=c(pw,pval), test=c(pw,paste("(",test,")",sep="")))
     names(resumen)[ncol(resumen)]="Comparison test"
-    if (showSummary) pander(resumen,split.table=90,keep.line.breaks=TRUE)
+    if (showSummary) {
+      format=paste("%1.",digits,"f",sep="")
+      presumen=data.frame(resumen[,1:4],apply(resumen[,5:13],2,spf,format),resumen[,14:16])
+      pander(presumen,split.table=90,keep.line.breaks=TRUE)
+    }
   }
   if (plot) plotSummary2(x,by,xlabel,bylabel,boxplot,histogram,rug,faceted,
                          densityCurve, normalCurve,addMeanLine)

@@ -24,14 +24,16 @@
 #' freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE)
 #'
 freqTable=function(x,by=NULL,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE,
-                   printFreq=TRUE, density=TRUE, showTable=TRUE, pctBycol=TRUE, title=""){
+                   printFreq=TRUE, density=TRUE, showTable=TRUE, pctBycol=TRUE,
+                   title="",digits=2){
   if (is.null(xlabel)) xlabel=toLabel(deparse(substitute(x)))
   if (is.null(by)){
     table1(x=x,xlabel=xlabel,plot=plot,horizontal=horizontal,
-           printFreq=printFreq,density=density, showTable=showTable, title=title)
+           printFreq=printFreq,density=density, showTable=showTable, title=title,digits=digits)
   } else{
     if (is.null(bylabel)) bylabel=toLabel(deparse(substitute(by)))
     table2(x=x,by=by,xlabel=xlabel,bylabel=bylabel,plot=plot,horizontal=horizontal,
-               printFreq=printFreq,density=density, showTable=showTable,pctBycol=pctBycol, title=title)
+           printFreq=printFreq,density=density, showTable=showTable,pctBycol=pctBycol,
+           title=title,digits=digits)
   }
 }

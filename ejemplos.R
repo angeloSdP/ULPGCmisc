@@ -5,19 +5,19 @@ library(ULPGCmisc)
 symptom=sample(LETTERS[1:4],120,replace=TRUE)
 disease=sample(c("Yes","No"),120,replace=TRUE)
 
-freqTable(symptom,by=disease,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=TRUE)
-freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=FALSE,
+freqTable(symptom,by=disease,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=TRUE, digits=1)
+freqTable(symptom,horizontal=FALSE,density=TRUE,printFreq=TRUE,showTable=TRUE,digits=10,
           title="Frecuencia de aparición de los distintos síntomas")
 
 x=rnorm(500,10,2)
-summarize(x)
+summarize(x,digits=4)
 summarize(x,normalCurve=TRUE)
 summarize(x,normalCurve=TRUE,report="complete")
 
 x=rweibull(120,2,5);
-summarize(x,densityCurve=TRUE,normalCurve=TRUE,rug=TRUE,report="complete")
+summarize(x,densityCurve=TRUE,normalCurve=TRUE,rug=TRUE,report="complete",digits=8)
 summarize(x,densityCurve=TRUE,normalCurve=TRUE,report="complete",rug=FALSE)
-summarize(x,densityCurve=TRUE,normalCurve=FALSE,rug=TRUE)
+summarize(x,densityCurve=TRUE,normalCurve=FALSE,rug=TRUE,digits=5)
 summarize(x,densityCurve=FALSE,normalCurve=FALSE,,report="complete",rug=FALSE,boxplot = FALSE)
 summarize(x,boxplot = TRUE,histogram=FALSE)
 summarize(x,report="complete")
@@ -26,7 +26,7 @@ summarize(x,report="complete")
 x=rweibull(120,2,5)
 by=sample(c("yes","no"),120,replace=TRUE,prob=c(0.6,0.4))
 
-summarize(x,by, boxplot=TRUE,histogram=FALSE,faceted=FALSE)
+summarize(x,by, boxplot=TRUE,histogram=FALSE,faceted=FALSE,digits=6)
 summarize(x,by, boxplot=FALSE,histogram=TRUE,faceted=FALSE)
 summarize(x,by, boxplot=TRUE,histogram=TRUE,faceted=FALSE)
 summarize(x,by, boxplot=TRUE,histogram=TRUE,faceted=TRUE)
@@ -60,7 +60,7 @@ summarize(x,by, boxplot=TRUE,histogram=TRUE,normalCurve=TRUE,densityCurve=TRUE,f
 
 x=c(rnorm(50,10,2),rnorm(50,8,1),rnorm(50,14,3),rnorm(50,10,0.5))
 by=sort(rep(letters[1:4],50))
-summarize(x,by, report="complete",plot=TRUE)
+summarize(x,by, report="complete",plot=TRUE,digits=6)
 summarize(x,by, plot=FALSE)
 
 
