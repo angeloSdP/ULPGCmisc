@@ -83,17 +83,20 @@ table2=function(x,by,xlabel=NULL,bylabel=NULL,plot=TRUE,horizontal=FALSE, printF
     require(grid)
     require(gtable)
     # add label for right strip
-    strips=which(z$layout$name=="strip-right")
-    zwpos=strips[1]
-    t=min(z$layout[strips,]$t)
-    b=max(z$layout[strips,]$b)
-    l=max(z$layout$l)+1
-    z <- gtable_add_cols(z, z$widths[z$layout[zwpos, ]$l],length(z$widths) - 1)
-    z <- gtable_add_grob(z,
-                         list(rectGrob(gp = gpar(col = NA, fill = gray(0.8))),
-                              textGrob(bylabel, rot = -90, gp = gpar(col = gray(0)))),
-                         t, l, b, name = paste(runif(2)))
-    plot(z)
+    strips=which(substr(z$layout$name,1,7)=="strip-r")
+    #strips=which(z$layout$name=="strip-right")
+    if (length(strips)>0){
+      zwpos=strips[1]
+      t=min(z$layout[strips,]$t)
+      b=max(z$layout[strips,]$b)
+      l=max(z$layout$l)+1
+      z <- gtable_add_cols(z, z$widths[z$layout[zwpos, ]$l],length(z$widths) - 1)
+      z <- gtable_add_grob(z,
+                           list(rectGrob(gp = gpar(col = NA, fill = gray(0.8))),
+                                textGrob(bylabel, rot = -90, gp = gpar(col = gray(0)))),
+                           t, l, b, name = paste(runif(2)))
+      plot(z)
+    }
     pandoc.p("")
   }
   return(invisible(tbl))
