@@ -94,7 +94,7 @@ validValues=function(x, by=NULL, byname=NULL){
   names(nValid)=nmv
   rownames(nValid)=NULL
   if (is.null(by)) with.NA=!apply(nValid,1,function(r) all(r[2]==N))
-  else with.NA=!apply(nValid,1,function(r) all(r[2:4]==c(N,nby)))
+  else with.NA=!apply(nValid,1,function(r) all(r[-1]==c(N,nby)))
   nValid$with.NA=ifelse(with.NA,"*","")
   haveNA=(sum(with.NA) > 0)
   return(list(nValid=nValid,haveNA=haveNA))
