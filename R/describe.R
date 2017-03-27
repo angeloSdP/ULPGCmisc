@@ -61,8 +61,9 @@ describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
       rj=desc(x=x[,j],by=by,xlabel=xlabel[j],bylabel=bylabel, plot=plot,
               report=report[j],showDescriptives = FALSE,digits=digits)
       resumen=rbind(resumen,setNames(rj,nms))
-      test=rbind(test,variable=rj[1],test=strsplit(names(rj[length(rj)]),"\n")[[1]][1])
+      test=c(test,strsplit(names(rj[length(rj)]),"\n")[[1]][1])
     }
+    names(test)=xlabel
     if (showDescriptives) pander(resumen,split.table=Inf)
     if(NApresent){
       warning("Missing values are present. Not all the variables are evaluated on the same sample size.",
