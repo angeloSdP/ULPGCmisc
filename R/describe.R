@@ -54,19 +54,21 @@ describe=function(x,by=NULL,xlabel=NULL,bylabel=NULL, plot=FALSE,
     NApresent=vv$haveNA
     resumen=NULL
     nms=names(vv$nValid)
-    if (length(nms)==5) nms[5]="P" else if (length(nms)==3) nms=nms[-3]
+    if (length(nms)==3) nms=nms[-3] else nms[length(nms)]="P"
     if (NApresent) nms=sapply(strsplit(nms,"\n"), function(x) x[1])
+    test=NULL
     for (j in 1:ncol(x)){
       rj=desc(x=x[,j],by=by,xlabel=xlabel[j],bylabel=bylabel, plot=plot,
               report=report[j],showDescriptives = FALSE,digits=digits)
       resumen=rbind(resumen,setNames(rj,nms))
+      test=c(test,strsplit(names(rj[length(rj)]),"\n")[[1]][1])
     }
     if (showDescriptives) pander(resumen,split.table=Inf)
     if(NApresent){
       warning("Missing values are present. Not all the variables are evaluated on the same sample size.",
                                   call.=FALSE)
-      return(invisible(list(summary=resumen, nValid=vv$nValid)))
-    } else return(invisible(list(summary=resumen)))
+      return(invisible(list(summary=resumen, nValid=vv$nValid, test=test)))
+    } else return(invisible(list(summary=resumen, test=test)))
   } else{
     resumen=desc(x,by=by,xlabel=xlabel,bylabel=bylabel, plot=plot,
                  report=report, showDescriptives=showDescriptives,digits=digits)

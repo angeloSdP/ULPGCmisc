@@ -15,8 +15,8 @@ Depends:
     gridExtra,
     gtable
 Description: Miscellaneous functions for the usual activity of the Mathematics Department members at the University of Las Palmas de Gran Canaria
-License:  GPL (>=2)
+License: GPL (>=2)
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 URL: https://github.com/angeloSdP/ULPGCmisc
 BugReports: https://github.com/angeloSdP/ULPGCmisc/issues
